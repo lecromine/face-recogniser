@@ -8,7 +8,7 @@ This is mostly because I know a lot about this area thanks to the time I have sp
 subject. And because I have already found the 'easy' solution (the really slow one, mind you), I don't need to waste my time on that 
 thought anymore. 
 
-So after doing some research I figured out that the solution could at least be O(n^2), probably better. When the program tries to find
+So after doing some research I figured out that the solution could at least be O(n^2), but probably better. When the program tries to find
 the nearest match for the face it's recognising it doesn't need to go through the whole collection of the faces - the major part of the
 faces can be ditched during the process without even looking at them.
 
