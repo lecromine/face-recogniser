@@ -1,7 +1,7 @@
 # Face Recogniser
 A program that can recognize a person based on pictures of their faces.
 
-* [Program definiton](Dokumentaatio/definition.md)
+* [Program definiton](Documentation/definition.md)
 
 ### Week reports
-1. [First week](Dokumentaatio/First-week-report.md)
+1. [First week](Documentation/First-week-report.md)
