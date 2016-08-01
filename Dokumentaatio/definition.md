@@ -15,6 +15,6 @@ When an user has a headshot of the person she wants to identify she uploads the 
 then looks for the nearest match for the uploaded photo.
 
 References:
-*[Satunnaisprojektiomenetelmä kasvojentunnistuksessa.](https://www.dropbox.com/s/hcmxbqr4y076cvl/RPFR2016.pdf?dl=0) (2016) Maria Yli-Luukko
+* [Satunnaisprojektiomenetelmä kasvojentunnistuksessa.](https://www.dropbox.com/s/hcmxbqr4y076cvl/RPFR2016.pdf?dl=0) (2016) Maria Yli-Luukko
 
 
