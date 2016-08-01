@@ -14,7 +14,7 @@ When new faces are added it will not affect the faces that were added before, so
 When an user has a headshot of the person she wants to identify she uploads the photo and runs the program which
 then looks for the nearest match for the uploaded photo.
 
-References:
+### References:
 * [Satunnaisprojektiomenetelmä kasvojentunnistuksessa.](https://www.dropbox.com/s/hcmxbqr4y076cvl/RPFR2016.pdf?dl=0) (2016) Maria Yli-Luukko
 
 
