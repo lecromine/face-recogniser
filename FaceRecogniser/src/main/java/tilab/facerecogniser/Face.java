@@ -4,22 +4,22 @@
 package tilab.facerecogniser;
 
 
-public class Node {
+public class Face {
 
     int keyNumber;
-    Node next;
+    Face next;
 
-    public Node() {
+    public Face() {
         keyNumber = 0;
         next = null;
     }
 
-    public Node(int keyNumber) {
+    public Face(int keyNumber) {
         this.keyNumber = keyNumber;
         this.next = next;
     }
     
-    public void setNext(Node next) {
+    public void setNext(Face next) {
         this.next = next;
     }
 
@@ -28,7 +28,7 @@ public class Node {
         return "" + keyNumber;
     }
 
-    public Node getNext() {
+    public Face getNext() {
         return next;
     }
 

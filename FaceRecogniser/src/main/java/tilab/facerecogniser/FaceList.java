@@ -3,19 +3,19 @@
  */
 package tilab.facerecogniser;
 
-public class List {
+public class FaceList {
 
-    private Node head;
+    private Face head;
     private int count;
 
-    public List() {
-        head = new Node();
+    public FaceList() {
+        head = new Face();
         count = 0;
     }
 
     public void add(int keyNumber) {
-        Node listTemp = new Node(keyNumber);
-        Node listCurrent = head;
+        Face listTemp = new Face(keyNumber);
+        Face listCurrent = head;
 
         while (listCurrent.getNext() != null) {
             listCurrent = listCurrent.getNext();
@@ -30,12 +30,12 @@ public class List {
      * @param   index   value that is used to find the node in the list
      * @return the node that corresponds to the index
      */
-    public Node get(int index) {
+    public Face get(int index) {
 
         if (index <= 0) {
             return null;
         }
-        Node listCurrent = null;
+        Face listCurrent = null;
         if (head != null) {
             listCurrent = head.getNext();
             for (int i = 0; i < index; i++) {
@@ -62,7 +62,7 @@ public class List {
             return false;
         }
 
-        Node listCurrent = head;
+        Face listCurrent = head;
         if (head != null) {
             for (int i = 0; i < index; i++) {
                 if (listCurrent.getNext() == null) {
@@ -84,7 +84,7 @@ public class List {
         String output = "";
 
         if (head != null) {
-            Node listCurrent = head.getNext();
+            Face listCurrent = head.getNext();
             while (listCurrent != null) {
                 output += "[" + listCurrent.toString() + "]";
                 listCurrent = listCurrent.getNext();
