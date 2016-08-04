@@ -1,6 +1,6 @@
 # Activity log
 
-Day | Hours | Description
+Date | Hours | Description
 --------------- | ----- | ------
 02.08.2016 | 3 | Planning
 03.08.2016 | 4 | Planning and coding
