@@ -9,7 +9,9 @@ public class main {
 
         Reader reader = new Reader();
         
-        reader.readFiles();
+        int[][] faceMat = new int[0][0];
+        
+        reader.readFiles(faceMat);
         
     }
 
