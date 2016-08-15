@@ -23,7 +23,6 @@ public class RandomProjection {
         
         double[][] projectedFaceMat = new double[RMatrix.getHeight()][faceMat.length];
         
-        projectedFaceMat = RMatrix.multiplicator(faceMat);
         
         return projectedFaceMat;
     }
@@ -32,9 +31,11 @@ public class RandomProjection {
     This method works the same as the previous one, but with vectors.
     */
     
-    public double[] randomProjection(double[][] RMatrix, int[] faceVec) {
+    public double[] randomProjection(RandomMatrix RMatrix, int[] faceVec) {
         
-        double[] projectedFaceVec = new double[RMatrix.length];
+        double[] projectedFaceVec = new double[RMatrix.getHeight()];
+        
+        projectedFaceVec = RMatrix.multiplicator(faceVec);
         
         return projectedFaceVec;
     }

@@ -24,19 +24,19 @@ public class RandomMatrixTest {
     @Test
     public void multiplicatorTest() {
 
-        int[][] A = {{4, 3}, {2, 1}};
-        int[][] B = {{1, 2}, {1, -2}};
-
-        RandomMatrix rand = new RandomMatrix();
-
-        double[][] C = rand.multiplicator(A, B);
-
-        double[][] checker = {{7.0, 2.0}, {3.0, 2.0}};
-               
-        if (C.equals(checker)) {
-            fail("The variables of the resulting matrix does not match to what was expected");
-
-        }
+//        int[][] A = {{4, 3}, {2, 1}};
+//        int[][] B = {{1, 2}, {1, -2}};
+//
+//        RandomMatrix rand = new RandomMatrix();
+//
+//        double[][] C = rand.multiplicator(A, B);
+//
+//        double[][] checker = {{7.0, 2.0}, {3.0, 2.0}};
+//               
+//        if (C.equals(checker)) {
+//            fail("The variables of the resulting matrix does not match to what was expected");
+//
+//        }
 
     }
 

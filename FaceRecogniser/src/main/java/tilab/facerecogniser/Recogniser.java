@@ -20,16 +20,17 @@ public class Recogniser {
 
         int[][] faceMat = new int[0][0];
         double[][] projectedFaceMat = new double[0][0];
+        
+        double[] projectedFaceVec = new double[0];
 
         faceMat = reader.readATTFiles(faceMat);
+        
+        int[] faceVec = faceMat[1];
 
-        projectedFaceMat = RP.randomProjection(rMatrix, faceMat);
+        projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
 
-        for (int i = 0; i < projectedFaceMat.length; i++) {
-            for (int j = 0; j < projectedFaceMat[0].length; j++) {
-                System.out.print(projectedFaceMat[i][j] + ", ");
-            }
-            System.out.println("");
+        for (int i = 0; i < projectedFaceVec.length; i++) {
+                System.out.print(projectedFaceVec[i] + ", ");
         }
         
         return closestMatch;
