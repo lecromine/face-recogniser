@@ -24,9 +24,10 @@ public class Reader {
      * @param int[][] faceMat   the matrix of the face vectors that the new face needs to be binded with
      * @return int[][] faceMat  new matrix with the new face
      */
-    public int[][] readFiles(int[][] faceMat) throws IOException {
+    public int[][] readATTFiles(int[][] faceMat) throws IOException {
 
         int index = 0;
+        
 
         for (int i = 1; i < 41; i++) {
             String path = "C:/Users/Lecromine/face-recogniser/FaceRecogniser/facegallery/s" + i;
