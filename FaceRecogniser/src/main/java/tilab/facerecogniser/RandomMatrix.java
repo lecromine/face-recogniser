@@ -14,6 +14,23 @@ public class RandomMatrix {
     public RandomMatrix() {
 
     }
+    
+    /*
+    This method checks if there's already an existing random matrix. This speeds up the recognition process significantly:
+    the user does not need to create a new random matrix per every recognition.
+    */
+    
+    public void getSavedRMatrix() {
+        
+    }
+    
+    /* 
+    This method saves the random matrix.
+    */
+    
+    public void saveRMatrix() {
+        
+    }
 
     /*
     This method initializes the random matrix that is used throughout the execution. In the final version

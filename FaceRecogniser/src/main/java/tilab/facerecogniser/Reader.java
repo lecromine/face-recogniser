@@ -2,18 +2,17 @@ package tilab.facerecogniser;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Reader {
+    
+    int[][] faceMat = new int[0][0];
 
     public Reader() {
 
@@ -24,12 +23,12 @@ public class Reader {
      * @param int[][] faceMat   the matrix of the face vectors that the new face needs to be binded with
      * @return int[][] faceMat  new matrix with the new face
      */
-    public int[][] readATTFiles(int[][] faceMat) throws IOException {
+    public int[][] readATTFiles() throws IOException {
 
         int index = 0;
         
 
-        for (int i = 1; i < 41; i++) {
+        for (int i = 1; i < 4; i++) {
             String path = "C:/Users/Lecromine/face-recogniser/FaceRecogniser/facegallery/s" + i;
             File dir = new File(path);
             for (File file : dir.listFiles()) {
@@ -114,5 +113,9 @@ public class Reader {
 
         }
         return faceVec;
+    }
+    
+    public int[][] getFaceMat() {
+        return this.faceMat;
     }
 }

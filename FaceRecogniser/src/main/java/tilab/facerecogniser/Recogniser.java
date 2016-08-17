@@ -14,26 +14,34 @@ public class Recogniser {
     public Recogniser() {
         rMatrix.initializeRMatrix();
     }
+    
+    /*
+    This method adds new faces to the database. All the uploaded faces are listed in the parameter projectedFaceMat in the RandomProjection class.
+    */
 
-    public int[] recogniseFace() throws IOException {
-        int[] closestMatch = new int[0];
+    public void addFaces() throws IOException {
 
-        int[][] faceMat = new int[0][0];
-        double[][] projectedFaceMat = new double[0][0];
-        
         double[] projectedFaceVec = new double[0];
 
-        faceMat = reader.readATTFiles(faceMat);
-        
-        int[] faceVec = faceMat[1];
+        reader.readATTFiles();
 
-        projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
+        for (int i = 0; i < reader.faceMat.length; i++) {
 
-        for (int i = 0; i < projectedFaceVec.length; i++) {
-                System.out.print(projectedFaceVec[i] + ", ");
+            int[] faceVec = reader.faceMat[i];
+
+            projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
+
+            RP.bindTogether(projectedFaceVec);
+
         }
-        
-        return closestMatch;
+
+        for (int i = 0; i < RP.projectedFaceMat.length; i++) {
+            for (int j = 0; j < 50; j++) {
+                System.out.print(RP.projectedFaceMat[i][j] + ", ");
+            }
+            System.out.println("");
+        }
+
     }
 
 }

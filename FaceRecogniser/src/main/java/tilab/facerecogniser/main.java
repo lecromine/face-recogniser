@@ -1,7 +1,6 @@
 package tilab.facerecogniser;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class main {
 
@@ -9,7 +8,7 @@ public class main {
         
         Recogniser recogniser = new Recogniser();
         
-        recogniser.recogniseFace();
+        recogniser.addFaces();
         
         
 //        FaceList theList = new FaceList();
