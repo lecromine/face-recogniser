@@ -25,14 +25,10 @@ public class Recogniser {
 
         reader.readATTFiles();
 
-        for (int i = 0; i < reader.faceMat.length; i++) {
-
-            int[] faceVec = reader.faceMat[i];
-
+        for (int[] faceVec : reader.faceMat) {
             projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
 
             RP.bindTogether(projectedFaceVec);
-
         }
 
         for (int i = 0; i < RP.projectedFaceMat.length; i++) {

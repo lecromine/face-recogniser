@@ -14,22 +14,27 @@ public class RandomMatrix {
     public RandomMatrix() {
 
     }
-    
+
     /*
     This method checks if there's already an existing random matrix. This speeds up the recognition process significantly:
     the user does not need to create a new random matrix per every recognition.
-    */
-    
+     */
     public void getSavedRMatrix() {
-        
+
     }
-    
+
+    /*
+    This method checks if random matrix already exists.
+     */
+    public boolean rMatrixExists() {
+        return false;
+    }
+
     /* 
     This method saves the random matrix.
-    */
-    
+     */
     public void saveRMatrix() {
-        
+
     }
 
     /*
@@ -38,14 +43,19 @@ public class RandomMatrix {
     where k << 10340 (meaning that k is significantly smaller than 10340).
      */
     public void initializeRMatrix() {
-        Random r = new Random();
 
-        for (int i = 0; i < RMatrix.length; i++) {
-            for (int j = 0; j < RMatrix[i].length; j++) {
-                RMatrix[i][j] = r.nextGaussian();
+        if (rMatrixExists() == false) {
+            Random r = new Random();
+
+            for (int i = 0; i < RMatrix.length; i++) {
+                for (int j = 0; j < RMatrix[i].length; j++) {
+                    RMatrix[i][j] = r.nextGaussian();
+                }
             }
-        }
 
+            saveRMatrix();
+        } else {
+        }
     }
 
     /*
@@ -69,8 +79,8 @@ public class RandomMatrix {
             projectedVector[i] = 0.00000;
         }
 
-        for (int i = 0; i < rRows; i++) { // aRow
-            for (int k = 0; k < rColumns; k++) { // aColumn
+        for (int i = 0; i < rRows; i++) {
+            for (int k = 0; k < rColumns; k++) {
                 projectedVector[i] += RMatrix[i][k] * A[k];
             }
 
