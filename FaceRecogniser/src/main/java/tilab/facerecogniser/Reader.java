@@ -11,10 +11,35 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Reader {
-    
+
     int[][] faceMat = new int[0][0];
 
     public Reader() {
+
+    }
+
+    /*
+    This method adds new faces to the database. All the uploaded faces are listed in the parameter projectedFaceMat in the RandomProjection class.
+    */
+    
+    public void addFaces(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
+
+        double[] projectedFaceVec = new double[0];
+
+        readATTFiles();
+
+        for (int[] faceVec : faceMat) {
+            projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
+
+            RP.bindTogether(projectedFaceVec);
+        }
+
+        for (int i = 0; i < RP.projectedFaceMat.length; i++) {
+            for (int j = 0; j < 50; j++) {
+                System.out.print(RP.projectedFaceMat[i][j] + ", ");
+            }
+            System.out.println("");
+        }
 
     }
 
@@ -26,7 +51,6 @@ public class Reader {
     public int[][] readATTFiles() throws IOException {
 
         int index = 0;
-        
 
         for (int i = 1; i < 4; i++) {
             String path = "C:/Users/Lecromine/face-recogniser/FaceRecogniser/facegallery/s" + i;
@@ -114,7 +138,7 @@ public class Reader {
         }
         return faceVec;
     }
-    
+
     public int[][] getFaceMat() {
         return this.faceMat;
     }

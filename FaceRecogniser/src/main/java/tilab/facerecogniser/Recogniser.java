@@ -16,28 +16,15 @@ public class Recogniser {
     }
     
     /*
-    This method adds new faces to the database. All the uploaded faces are listed in the parameter projectedFaceMat in the RandomProjection class.
+    This method finds the closest match for the uploaded face. It resolves the shortest Euclidean distance between
+    the face and the faces in the database. 
+    
     */
-
-    public void addFaces() throws IOException {
-
-        double[] projectedFaceVec = new double[0];
-
-        reader.readATTFiles();
-
-        for (int[] faceVec : reader.faceMat) {
-            projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
-
-            RP.bindTogether(projectedFaceVec);
-        }
-
-        for (int i = 0; i < RP.projectedFaceMat.length; i++) {
-            for (int j = 0; j < 50; j++) {
-                System.out.print(RP.projectedFaceMat[i][j] + ", ");
-            }
-            System.out.println("");
-        }
-
+    
+    public static double[][] recognise(double[][] recognisable) {
+        
     }
+
+    
 
 }

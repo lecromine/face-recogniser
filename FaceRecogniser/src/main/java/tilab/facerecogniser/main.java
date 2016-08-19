@@ -5,12 +5,14 @@ import java.io.IOException;
 public class main {
 
     public static void main(String[] args) throws IOException {
-        
+
         Recogniser recogniser = new Recogniser();
-        
-        recogniser.addFaces();
-        
-        
+        Reader reader = new Reader();
+        RandomProjection RP = new RandomProjection();
+        RandomMatrix rMatrix = new RandomMatrix();
+
+        reader.addFaces(RP, rMatrix);
+
 //        FaceList theList = new FaceList();
 //
 //        Reader reader = new Reader();
@@ -23,7 +25,6 @@ public class main {
 //        int[][] B = {{1, 2}, {1, -2}};
 //
 //        RandomMatrix rand = new RandomMatrix();
-        
 //        double[][] C = rand.multiplicator(A, B);
 //
 //        for (int i = 0; i < C.length; i++) {
@@ -32,7 +33,6 @@ public class main {
 //            }
 //            System.out.println("");
 //        }
-
     }
 
 }
