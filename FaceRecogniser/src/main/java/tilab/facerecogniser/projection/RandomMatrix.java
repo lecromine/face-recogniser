@@ -15,7 +15,7 @@ public class RandomMatrix {
 
     double[][] rMatrix = new double[500][10340];
     ArrayFileWriter writer = new ArrayFileWriter();
-    String rMatrixFilepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\RandomMatrix.csv";
+    String rMatrixFilepath = "";
 
     public RandomMatrix() throws IOException {
         initializeRMatrix();
@@ -88,6 +88,10 @@ public class RandomMatrix {
 
     public double[][] getRMatrix() {
         return this.rMatrix;
+    }
+    
+    public void setrMatrixFilePath(String filepath) {
+        this.rMatrixFilepath = filepath + "\\RandomMatrix.csv";
     }
 
     public int getWidth() {

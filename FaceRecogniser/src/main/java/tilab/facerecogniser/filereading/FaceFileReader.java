@@ -20,9 +20,13 @@ public class FaceFileReader {
 
     }
 
-    /*
-    This method adds new faces to the database. All the uploaded faces are 
-    listed in the parameter projectedFaceMat in the RandomProjection class.
+    /**
+     * This method adds new faces to the database. All the uploaded faces are 
+     * listed in the parameter projectedFaceMat in the RandomProjection class.
+     * These faces are projected to R^k dimension and that's why it needs the
+     * RandomProjection class as a parameter.
+     * @param RP        This is used to project the new face to the R^k subspace.
+     * @param rMatrix   Random matrix defines the projected face vector.
      */
     public void addFaces(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
 
@@ -44,21 +48,15 @@ public class FaceFileReader {
             RP.loadProjectedFaceMat();
         }
 
-        
-
-//        for (int i = 0; i < RP.projectedFaceMat.length; i++) {
-//            for (int j = 0; j < 50; j++) {
-//                System.out.print(RP.projectedFaceMat[i][j] + ", ");
-//            }
-//            System.out.println("");
-//        }
     }
 
-    /*
-     * This method only exists for debugging purposes. It wont be in the final 
-     * version.
-     * @param int[][] faceMat   the matrix of the face vectors that the new face needs to be binded with
-     * @return int[][] faceMat  new matrix with the new face
+    /**
+     * With this method we can initilaize the face matrix for testing purposes.
+     * This is done by uploading AT&T face gallery for further examination.
+     * http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
+     * 
+     * @param faceMat   empty matrix where AT&T images are added to.
+     * @return the face matrix with all the AT&T files in it
      */
     public int[][] readATTFiles(int[][] faceMat) throws IOException {
 
@@ -77,13 +75,10 @@ public class FaceFileReader {
         return faceMat;
     }
 
-    /*
- 
-    This file reads the .pgm files from facegallery and copies the values to a vector.
-    This operation is done only once at the beginning when running the program.
-    @param File file        the file that needs to be converted to an 1D array
-    @return int[] faceVec   vector representation of the .pgm file
-    
+    /**
+     * This method reads the file .pgm from the location given to it.
+     * @param file  the file that needs to be read
+     * @return
      */
     public int[] readFile(File file) throws FileNotFoundException, IOException {
 
@@ -93,7 +88,8 @@ public class FaceFileReader {
         try {
             f = new FileInputStream(file);
             BufferedReader br = new BufferedReader(new InputStreamReader(f));
-            String magic = br.readLine();
+            // format -variable has either value P5 or P2: in my implementation we only consider the P5 case.
+            String format = br.readLine();  
             String line = br.readLine();
 
             Scanner s = new Scanner(line);
@@ -108,7 +104,7 @@ public class FaceFileReader {
             br.close();
             f.close();
 
-            int b = 0;
+            int pixelValue = 0;
             int counter = 0;
             f = new FileInputStream(file);
             DataInputStream dis = new DataInputStream(f);
@@ -116,8 +112,8 @@ public class FaceFileReader {
             dis.readLine();
             dis.readLine();
             dis.readLine();
-            while ((b = dis.read()) >= 0) {
-                faceVec[counter] = b;
+            while ((pixelValue = dis.read()) >= 0) {
+                faceVec[counter] = pixelValue;
                 counter++;
             }
 
@@ -131,11 +127,5 @@ public class FaceFileReader {
         }
         return faceVec;
     }
-
-    /*
-    This method saves the double array to a file.
-    @param filename     path
-    @double[][] x       array to be saved
-     */
 
 }

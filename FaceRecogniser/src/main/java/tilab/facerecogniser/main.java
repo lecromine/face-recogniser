@@ -1,6 +1,6 @@
  package tilab.facerecogniser;
 
-import Ui.MainFrame;
+import tilab.facerecogniser.ui.MainFrame;
 import tilab.facerecogniser.projection.RandomProjection;
 import tilab.facerecogniser.projection.RandomMatrix;
 import java.io.IOException;

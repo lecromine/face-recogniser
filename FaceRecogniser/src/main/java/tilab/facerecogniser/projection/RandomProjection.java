@@ -13,7 +13,7 @@ public class RandomProjection {
 
     ArrayFileWriter writer = new ArrayFileWriter();
     double[][] projectedFaceMat;
-    String projectedFaceMatrixFilePath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\ProjectedFaceMatrix.csv";
+    String projectedFaceMatrixFilePath = "";
 
     public RandomProjection() throws IOException {
         loadProjectedFaceMat();
@@ -61,6 +61,10 @@ public class RandomProjection {
     
     public void loadProjectedFaceMat() throws IOException {
         this.projectedFaceMat = writer.load(projectedFaceMatrixFilePath, 0, 500);
+    }
+    
+    public void setProjectedFaceMatrixFilePath(String filepath) {
+        this.projectedFaceMatrixFilePath = filepath + "\\ProjectedFaceMatrix.csv";
     }
     
     public String getProjectedFaceMatrixFilePath() {
