@@ -35,8 +35,6 @@ public class ArrayFileWriter {
         pw.write(sb.toString());
         pw.close();
         
-        System.out.println("done!");
-        
 //        File f = new File(filename);
 //
 //        BufferedWriter outputWriter = null;
