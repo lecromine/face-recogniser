@@ -1,25 +1,39 @@
-package tilab.facerecogniser;
+ package tilab.facerecogniser;
 
+import Ui.MainFrame;
+import java.io.File;
 import tilab.facerecogniser.recognitionprocess.Recogniser;
 import tilab.facerecogniser.filereading.ArrayFileWriter;
-import tilab.facerecogniser.filereading.Reader;
+import tilab.facerecogniser.filereading.FaceFileReader;
 import tilab.facerecogniser.projection.RandomProjection;
 import tilab.facerecogniser.projection.RandomMatrix;
 import java.io.IOException;
+import tilab.facerecogniser.recognitionprocess.ClosestMatch;
 
 public class main {
 
     public static void main(String[] args) throws IOException {
 
         Recogniser recogniser = new Recogniser();
-        Reader reader = new Reader();
+        FaceFileReader reader = new FaceFileReader();
         RandomProjection RP = new RandomProjection();
         RandomMatrix rMatrix = new RandomMatrix();
         ArrayFileWriter writer = new ArrayFileWriter();
+        
+//        MainFrame mainFrame = new MainFrame();
+//        
+//        mainFrame.setVisible(true);
                     
         reader.addFaces(RP, rMatrix);
         
-        rMatrix.initializeRMatrix();
+        File file = new File("C:\\Users\\Lecromine\\Documents\\savedfiles\\10.pgm");
+        
+        double[] recognise = RP.randomProjection(rMatrix, reader.readFile(file));
+        
+        ClosestMatch closestMatch = new ClosestMatch();
+        
+        System.out.println(closestMatch.shortestEuclideanDistance(RP.getProjectedFaceMat(), recognise));
+          
         
         
 

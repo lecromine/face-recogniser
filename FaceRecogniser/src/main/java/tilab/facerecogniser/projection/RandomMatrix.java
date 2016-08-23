@@ -5,32 +5,36 @@ import java.util.Random;
 import tilab.facerecogniser.filereading.ArrayFileWriter;
 
 /*
-This class contains information about the random matrix that is used in random projections.
-Each element of the RMatrix corresponds to a random variable from normal distribution.
-@param int[][] RMatrix  the random matrix that is used to project faces to the lower dimension
+This class contains information about the random matrix that is used in random 
+projections. Each element of the RMatrix corresponds to a random variable from 
+normal distribution.
+@param int[][] RMatrix  the random matrix that is used to project faces to the 
+                        lower dimension
  */
 public class RandomMatrix {
 
     double[][] rMatrix = new double[500][10340];
     ArrayFileWriter writer = new ArrayFileWriter();
-    String rMatrixFilepath = "C:\\Users\\Lecromine\\face-recogniser\\FaceRecogniser\\savedfiles\\RandomMatrix.csv";
+    String rMatrixFilepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\RandomMatrix.csv";
 
-    public RandomMatrix() {
-
+    public RandomMatrix() throws IOException {
+        initializeRMatrix();
     }
 
     /*
-    This method checks if there's already an existing random matrix. This speeds up the recognition process significantly:
-    the user does not need to create a new random matrix per every recognition.
+    This method checks if there's already an existing random matrix. This speeds 
+    up the recognition process significantly: the user does not need to create a 
+    new random matrix per every recognition.
      */
     public void getSavedRMatrix() {
 
     }
 
     /*
-    This method initializes the random matrix that is used throughout the execution. In the final version
-    this matrix will be created only once and then saved for later use. The random matrix will be k*10340
-    where k << 10340 (meaning that k is significantly smaller than 10340).
+    This method initializes the random matrix that is used throughout the 
+    execution. In the final version this matrix will be created only once and 
+    then saved for later use. The random matrix will be k*10340 where k << 10340 
+    (meaning that k is significantly smaller than 10340).
      */
     public void initializeRMatrix() throws IOException {
         
@@ -45,12 +49,13 @@ public class RandomMatrix {
 
             writer.save(rMatrixFilepath, rMatrix);
         } else {
-            rMatrix = writer.load(rMatrixFilepath, rMatrix);
+            this.rMatrix = writer.load(rMatrixFilepath, rMatrix.length, rMatrix[0].length);
         }
     }
 
     /*
-    This method casts the matrix multiplication -operation on the matrixes it is given.
+    This method casts the matrix multiplication -operation on the matrixes it is 
+    given.
     @param int[] A     vector in C = RMatrix * A
     @return            solution
      */
@@ -63,10 +68,11 @@ public class RandomMatrix {
         int aColumns = 1;
 
         if (rColumns != aRows) {
-            throw new IllegalArgumentException("Rows (" + rColumns + ") did not match columns (" + aRows + ").");
+            throw new IllegalArgumentException(
+                    "Rows (" + rColumns + ") did not match columns (" + aRows + ").");
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < projectedVector.length; i++) {
             projectedVector[i] = 0.00000;
         }
 

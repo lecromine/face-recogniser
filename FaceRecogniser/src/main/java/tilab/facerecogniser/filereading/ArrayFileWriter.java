@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class ArrayFileWriter {
 
@@ -18,14 +20,14 @@ public class ArrayFileWriter {
     @param String filename      path to the .txt file used for saving
     @param double[][] faceMat   projected face matrix
      */
-    public static void save(String filename, double[][] faceMat) throws IOException {
+    public void save(String filename, double[][] faceMat) throws IOException {
 
         File f = new File(filename);
-        
+
         PrintWriter pw = new PrintWriter(new File(filename));
         StringBuilder sb = new StringBuilder();
-        
-         for (double[] faceVec : faceMat) {
+
+        for (double[] faceVec : faceMat) {
             for (double x : faceVec) {
                 sb.append(Double.toString(x));
                 sb.append(',');
@@ -34,7 +36,7 @@ public class ArrayFileWriter {
         }
         pw.write(sb.toString());
         pw.close();
-        
+
 //        File f = new File(filename);
 //
 //        BufferedWriter outputWriter = null;
@@ -57,28 +59,39 @@ public class ArrayFileWriter {
     @param double[][] projectedFaceMat  empty double array in which the .txt file is written
     @return projectedFaceMat    successfully converted double array.
      */
-    public double[][] load(String filename, double[][] savedArray) throws FileNotFoundException, IOException {
+    public double[][] load(String filename, int matrixRows, int matrixCols) throws FileNotFoundException, IOException {
 
-        FileReader fileReader = new FileReader(filename);
-        try (BufferedReader br = new BufferedReader(fileReader)) {
-            String line = null;
+        double[][] savedArray = new double[matrixRows][matrixCols];
+        
+        Scanner scanIn = null;
+        int rows = 0;
+        String inputLine = "";
 
-            int i = 0;
-            int j = 0;
+        try {
 
-            while ((line = br.readLine()) != null) {
+            scanIn = new Scanner(new BufferedReader(new FileReader(filename)));
 
-                if (j == savedArray[0].length) {
-                    i++;
-                    j = 0;
-                } else {
-                    savedArray[i][j] = Double.parseDouble(line);
-                    j++;
+            while (scanIn.hasNextLine()) {
+                inputLine = scanIn.nextLine();
+                String[] InArray = inputLine.split(",");
+
+                if (savedArray.length == rows) {
+                    savedArray = Arrays.copyOf(savedArray, savedArray.length + 1);
+                    savedArray[rows] = new double[InArray.length];
+                }
+
+                for (int x = 0; x < InArray.length; x++) {
+                    
+                    savedArray[rows][x] = Double.parseDouble(InArray[x]);
 
                 }
-            }
-        }
 
+                rows++;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         return savedArray;
     }
 
