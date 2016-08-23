@@ -1,5 +1,10 @@
 package tilab.facerecogniser;
 
+import tilab.facerecogniser.recognitionprocess.Recogniser;
+import tilab.facerecogniser.filereading.ArrayFileWriter;
+import tilab.facerecogniser.filereading.Reader;
+import tilab.facerecogniser.projection.RandomProjection;
+import tilab.facerecogniser.projection.RandomMatrix;
 import java.io.IOException;
 
 public class main {
@@ -10,9 +15,16 @@ public class main {
         Reader reader = new Reader();
         RandomProjection RP = new RandomProjection();
         RandomMatrix rMatrix = new RandomMatrix();
-
+        ArrayFileWriter writer = new ArrayFileWriter();
+                    
         reader.addFaces(RP, rMatrix);
+        
+        rMatrix.initializeRMatrix();
+        
+        
 
+        writer.save("C:\\Users\\Lecromine\\face-recogniser\\FaceRecogniser\\savedfiles\\projectedFaceMat.txt", RP.getProjectedFaceMat());
+        
 //        FaceList theList = new FaceList();
 //
 //        Reader reader = new Reader();
