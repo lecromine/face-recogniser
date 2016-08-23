@@ -1,7 +1,7 @@
 /*
  * In this class I will implement a graph (like linkedlist) where the face database can be uploaded.
  */
-package tilab.facerecogniser;
+package tilab.facerecogniser.datastructure;
 
 public class FaceList {
 

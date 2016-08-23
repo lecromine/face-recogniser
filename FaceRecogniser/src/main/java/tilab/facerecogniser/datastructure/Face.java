@@ -1,7 +1,7 @@
 /*
  * This class 
  */
-package tilab.facerecogniser;
+package tilab.facerecogniser.datastructure;
 
 
 public class Face {

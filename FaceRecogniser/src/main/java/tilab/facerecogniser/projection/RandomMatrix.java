@@ -1,6 +1,8 @@
-package tilab.facerecogniser;
+package tilab.facerecogniser.projection;
 
+import java.io.IOException;
 import java.util.Random;
+import tilab.facerecogniser.filereading.ArrayFileWriter;
 
 /*
 This class contains information about the random matrix that is used in random projections.
@@ -9,7 +11,9 @@ Each element of the RMatrix corresponds to a random variable from normal distrib
  */
 public class RandomMatrix {
 
-    double[][] RMatrix = new double[500][10340];
+    double[][] rMatrix = new double[500][10340];
+    ArrayFileWriter writer = new ArrayFileWriter();
+    String rMatrixFilepath = "C:\\Users\\Lecromine\\face-recogniser\\FaceRecogniser\\savedfiles\\RandomMatrix.csv";
 
     public RandomMatrix() {
 
@@ -24,37 +28,24 @@ public class RandomMatrix {
     }
 
     /*
-    This method checks if random matrix already exists.
-     */
-    public boolean rMatrixExists() {
-        return false;
-    }
-
-    /* 
-    This method saves the random matrix.
-     */
-    public void saveRMatrix() {
-
-    }
-
-    /*
     This method initializes the random matrix that is used throughout the execution. In the final version
     this matrix will be created only once and then saved for later use. The random matrix will be k*10340
     where k << 10340 (meaning that k is significantly smaller than 10340).
      */
-    public void initializeRMatrix() {
-
-        if (rMatrixExists() == false) {
+    public void initializeRMatrix() throws IOException {
+        
+        if (writer.doesFileExist(rMatrixFilepath)== false) {
             Random r = new Random();
 
-            for (int i = 0; i < RMatrix.length; i++) {
-                for (int j = 0; j < RMatrix[i].length; j++) {
-                    RMatrix[i][j] = r.nextGaussian();
+            for (int i = 0; i < rMatrix.length; i++) {
+                for (int j = 0; j < rMatrix[i].length; j++) {
+                    rMatrix[i][j] = r.nextGaussian();
                 }
             }
 
-            saveRMatrix();
+            writer.save(rMatrixFilepath, rMatrix);
         } else {
+            rMatrix = writer.load(rMatrixFilepath, rMatrix);
         }
     }
 
@@ -64,10 +55,10 @@ public class RandomMatrix {
     @return            solution
      */
     public double[] multiplicator(int[] A) {
-        double[] projectedVector = new double[RMatrix.length];
+        double[] projectedVector = new double[rMatrix.length];
 
-        int rRows = RMatrix.length;
-        int rColumns = RMatrix[0].length;
+        int rRows = rMatrix.length;
+        int rColumns = rMatrix[0].length;
         int aRows = A.length;
         int aColumns = 1;
 
@@ -81,7 +72,7 @@ public class RandomMatrix {
 
         for (int i = 0; i < rRows; i++) {
             for (int k = 0; k < rColumns; k++) {
-                projectedVector[i] += RMatrix[i][k] * A[k];
+                projectedVector[i] += rMatrix[i][k] * A[k];
             }
 
         }
@@ -90,14 +81,14 @@ public class RandomMatrix {
     }
 
     public double[][] getRMatrix() {
-        return this.RMatrix;
+        return this.rMatrix;
     }
 
     public int getWidth() {
-        return this.RMatrix[1].length;
+        return this.rMatrix[1].length;
     }
 
     public int getHeight() {
-        return this.RMatrix.length;
+        return this.rMatrix.length;
     }
 }

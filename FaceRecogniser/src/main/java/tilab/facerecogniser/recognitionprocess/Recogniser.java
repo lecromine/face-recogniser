@@ -1,8 +1,11 @@
 /*
 This class is called by the main class and it binds together all the operations that are distributed to other classes.
  */
-package tilab.facerecogniser;
+package tilab.facerecogniser.recognitionprocess;
 
+import tilab.facerecogniser.filereading.Reader;
+import tilab.facerecogniser.projection.RandomProjection;
+import tilab.facerecogniser.projection.RandomMatrix;
 import java.io.IOException;
 
 public class Recogniser {
@@ -11,7 +14,7 @@ public class Recogniser {
     RandomProjection RP = new RandomProjection();
     RandomMatrix rMatrix = new RandomMatrix();
 
-    public Recogniser() {
+    public Recogniser() throws IOException {
         rMatrix.initializeRMatrix();
     }
     
@@ -23,6 +26,9 @@ public class Recogniser {
     
     public static double[][] recognise(double[][] recognisable) {
         
+        double[][] closestMatch = new double[0][0];
+        
+        return closestMatch;
     }
 
     

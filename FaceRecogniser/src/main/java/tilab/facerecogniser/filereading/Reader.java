@@ -1,10 +1,14 @@
-package tilab.facerecogniser;
+package tilab.facerecogniser.filereading;
 
+import tilab.facerecogniser.projection.RandomProjection;
+import tilab.facerecogniser.projection.RandomMatrix;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -13,6 +17,7 @@ import java.util.Scanner;
 public class Reader {
 
     int[][] faceMat = new int[0][0];
+    ArrayFileWriter save = new ArrayFileWriter();
 
     public Reader() {
 
@@ -20,8 +25,7 @@ public class Reader {
 
     /*
     This method adds new faces to the database. All the uploaded faces are listed in the parameter projectedFaceMat in the RandomProjection class.
-    */
-    
+     */
     public void addFaces(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
 
         double[] projectedFaceVec = new double[0];
@@ -34,12 +38,12 @@ public class Reader {
             RP.bindTogether(projectedFaceVec);
         }
 
-        for (int i = 0; i < RP.projectedFaceMat.length; i++) {
-            for (int j = 0; j < 50; j++) {
-                System.out.print(RP.projectedFaceMat[i][j] + ", ");
-            }
-            System.out.println("");
-        }
+//        for (int i = 0; i < RP.projectedFaceMat.length; i++) {
+//            for (int j = 0; j < 50; j++) {
+//                System.out.print(RP.projectedFaceMat[i][j] + ", ");
+//            }
+//            System.out.println("");
+//        }
 
     }
 
@@ -53,7 +57,7 @@ public class Reader {
         int index = 0;
 
         for (int i = 1; i < 4; i++) {
-            String path = "C:/Users/Lecromine/face-recogniser/FaceRecogniser/facegallery/s" + i;
+            String path = "C:/Users/Lecromine/Documents/s" + i;
             File dir = new File(path);
             for (File file : dir.listFiles()) {
                 faceMat = Arrays.copyOf(faceMat, faceMat.length + 1);
@@ -138,6 +142,14 @@ public class Reader {
         }
         return faceVec;
     }
+    
+    /*
+    This method saves the double array to a file.
+    @param filename     path
+    @double[][] x       array to be saved
+    */
+
+
 
     public int[][] getFaceMat() {
         return this.faceMat;

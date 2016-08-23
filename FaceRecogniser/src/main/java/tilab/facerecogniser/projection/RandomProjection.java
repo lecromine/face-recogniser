@@ -2,7 +2,7 @@
 This class projects the matrixes to desired lower dimension R^k. Random matrix and 
 the face matrix/vector are given to the class from the calling class.
  */
-package tilab.facerecogniser;
+package tilab.facerecogniser.projection;
 
 import java.util.Arrays;
 
@@ -43,6 +43,10 @@ public class RandomProjection {
         projectedFaceVec = RMatrix.multiplicator(faceVec);
 
         return projectedFaceVec;
+    }
+    
+    public double[][] getProjectedFaceMat() {
+        return this.projectedFaceMat;
     }
 
 }
