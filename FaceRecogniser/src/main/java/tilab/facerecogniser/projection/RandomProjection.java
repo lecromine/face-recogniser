@@ -7,15 +7,16 @@ package tilab.facerecogniser.projection;
 import java.io.IOException;
 import java.util.Arrays;
 import tilab.facerecogniser.filereading.ArrayFileWriter;
+import tilab.facerecogniser.filereading.FaceFileReader;
 
 public class RandomProjection {
 
     ArrayFileWriter writer = new ArrayFileWriter();
-    double[][] projectedFaceMat = new double[0][0];
+    double[][] projectedFaceMat;
     String projectedFaceMatrixFilePath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\ProjectedFaceMatrix.csv";
 
-    public RandomProjection() {
-
+    public RandomProjection() throws IOException {
+        loadProjectedFaceMat();
     }
 
 

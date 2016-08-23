@@ -18,7 +18,7 @@ public class ClosestMatch {
      * @param faceVecRecognisable uploaded face vector
      * @return distance between the two vectors
      */
-    public double shortestEuclideanDistance(double[][] projectedFaceMat, double[] faceVecRecognisable) {
+    public int shortestEuclideanDistance(double[][] projectedFaceMat, double[] faceVecRecognisable) {
 
         double[] closestSoFar = new double[0];
         double minDistance = Double.MAX_VALUE;
@@ -62,7 +62,7 @@ public class ClosestMatch {
 
         System.out.println("index of closest " + indexOfClosest);
 
-        return Math.sqrt(distance);
+        return indexOfClosest;
     }
 
 }
