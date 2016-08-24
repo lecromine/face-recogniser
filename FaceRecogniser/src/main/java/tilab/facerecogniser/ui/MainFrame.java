@@ -129,7 +129,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel4.setText("index of closest");
 
-        jLabel5.setText("jLabel5");
+        jLabel5.setText(" ");
 
         jLabel6.setText("Insert location for temporary files.");
 
@@ -257,8 +257,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -281,19 +280,26 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String filepath = jTextField2.getText();
         double[] recognise = new double[0];
-        
-        try {
-            recognise = RP.randomProjection(rMatrix, reader.readFile(new File(filepath)));
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+
+        if (rMatrix.getFilePath().equals("")
+                || RP.getFilepath().equals("")) {
+            jLabel5.setText("Saving folder for temporary files not initialized. Try again.");
+        } else {
+
+            try {
+                recognise = RP.randomProjection(rMatrix, reader.readFile(new File(filepath)));
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            int indexOfClosest = closestMatch.shortestEuclideanDistance(RP.getProjectedFaceMat(),
+                    recognise);
+
+            jLabel5.setText("" + indexOfClosest);
+            
         }
-        
-        int indexOfClosest = closestMatch.shortestEuclideanDistance(RP.getProjectedFaceMat(), recognise);
-        
-        jLabel5.setText("" + indexOfClosest);
-        
-        
-                
+
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
@@ -309,9 +315,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+
+        jButton6.setText("Wait...");
+
         String filepath = jTextField3.getText();
         try {
             rMatrix.setFilePath(filepath);
+            RP.setFilepath(filepath);
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -320,7 +330,9 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        jButton6.setText("Done.");
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

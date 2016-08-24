@@ -13,7 +13,7 @@ public class RandomProjection {
 
     CSVReader csvReader = new CSVReader();
     double[][] projectedFaceMat;
-    String projectedFaceMatrixFilePath = "";
+    String filepath = "";
 
     public RandomProjection() throws IOException {
 
@@ -36,7 +36,7 @@ public class RandomProjection {
     }
 
     public void saveProjectedFaceMat() throws IOException {
-        csvReader.save(projectedFaceMatrixFilePath, projectedFaceMat);
+        csvReader.save(filepath, projectedFaceMat);
     }
 
     /*
@@ -60,20 +60,20 @@ public class RandomProjection {
     }
 
     public void loadProjectedFaceMat() throws IOException {
-        if (!projectedFaceMatrixFilePath.equals("")) {
-            this.projectedFaceMat = csvReader.load(projectedFaceMatrixFilePath, 0, 500);
+        if (!filepath.equals("")) {
+            this.projectedFaceMat = csvReader.load(filepath, 0, 500);
         } else {
             System.out.println("Save folder not initialized. Try again.");
         }
     }
 
     public void setFilepath(String filepath) throws IOException {
-        this.projectedFaceMatrixFilePath = filepath + "\\ProjectedFaceMatrix.csv";
+        this.filepath = filepath + "\\ProjectedFaceMatrix.csv";
         loadProjectedFaceMat();
     }
 
     public String getFilepath() {
-        return this.projectedFaceMatrixFilePath;
+        return this.filepath;
     }
 
 }

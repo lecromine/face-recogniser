@@ -26,7 +26,8 @@ public class ClosestMatch {
         double distance = 0;
         int minRow = 0;
         int indexOfClosest = 0;
-
+        
+        double correctOne = 0; // debugging
         int index = 0; // debugging
         int jndex = 0; // debugging
 
@@ -47,6 +48,10 @@ public class ClosestMatch {
                     }
 
                 }
+                
+                if (i == 192) {
+                    correctOne = distance;
+                }
 
                 if (distance < minDistance) {
                     closestSoFar = projectedFaceMat[i];
@@ -62,6 +67,8 @@ public class ClosestMatch {
         }
 
         System.out.println("index of closest " + indexOfClosest);
+        System.out.println("distance " + distance);
+        System.out.println("distancetotherightone " + correctOne);
 
         return indexOfClosest;
     }

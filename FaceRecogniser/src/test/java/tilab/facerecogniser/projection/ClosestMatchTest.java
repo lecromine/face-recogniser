@@ -23,20 +23,24 @@ public class ClosestMatchTest {
     
     ClosestMatch closestMatch = new ClosestMatch();
     PGMReader reader = new PGMReader();
+    String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
     
     public ClosestMatchTest() {
     }
     
     @Test
     public void shortestEuclideanDistanceTest1() throws IOException {
+        
+        long beginningTime = System.currentTimeMillis();
+        
         RandomProjection randomProjection = new RandomProjection();
         RandomMatrix rMatrix = new RandomMatrix();
         
-        randomProjection.setFilepath(
-                "C:\\Users\\Lecromine\\Documents\\savedfiles\\");
+        randomProjection.setFilepath(filepath);
+        rMatrix.setFilePath(filepath);
         
         int[] testFaceVec = reader.readFile(
-                new File("C:\\Users\\Lecromine\\Documents\\facegallery\\s2\\1.pgm"));
+                new File("C:\\Users\\Lecromine\\Documents\\facegallery\\s20\\2.pgm"));
         
         double[] testProjectedVec = randomProjection.randomProjection(
                 rMatrix, testFaceVec);
@@ -44,9 +48,14 @@ public class ClosestMatchTest {
         int indexOfClosest = closestMatch.shortestEuclideanDistance(
                 randomProjection.projectedFaceMat, testProjectedVec);
         
-        if (indexOfClosest != 10) {
-//            fail("index of closest " + indexOfClosest + " != 10");
+        if (indexOfClosest != 192) {
+            fail("index of closest " + indexOfClosest + " != 10");
         } 
+        
+                long endingTime = System.currentTimeMillis();
+        
+        System.out.println("Duration of the operation: " + 
+                (endingTime - beginningTime) + "ms.");
         
         
         

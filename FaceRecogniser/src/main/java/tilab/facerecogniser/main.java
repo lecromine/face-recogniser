@@ -1,39 +1,43 @@
- package tilab.facerecogniser;
+package tilab.facerecogniser;
 
+import java.io.File;
 import tilab.facerecogniser.ui.MainFrame;
 import tilab.facerecogniser.projection.RandomProjection;
 import tilab.facerecogniser.projection.RandomMatrix;
 import java.io.IOException;
+import tilab.facerecogniser.filereading.CSVReader;
+import tilab.facerecogniser.filereading.PGMReader;
+import tilab.facerecogniser.projection.ClosestMatch;
 
 public class main {
 
     public static void main(String[] args) throws IOException {
 
-//        Recogniser recogniser = new Recogniser();
-//        FaceFileReader reader = new FaceFileReader();
+
         RandomProjection RP = new RandomProjection();
         RandomMatrix rMatrix = new RandomMatrix();
-//        ArrayFileWriter writer = new ArrayFileWriter();
+//        CSVReader reader = new CSVReader();
+//        PGMReader pgmReader = new PGMReader();
+//        String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
 //        
-        MainFrame mainFrame = new MainFrame(rMatrix, RP);
-        
-        mainFrame.setVisible(true);
-                    
-//        reader.addFaces(RP, rMatrix);
+//        RP.setFilepath(filepath);
+//        rMatrix.setFilePath(filepath);
 //        
-//        File file = new File("C:\\Users\\Lecromine\\Documents\\savedfiles\\10.pgm");
+//        pgmReader.addFaces(RP, rMatrix);
 //        
-//        double[] recognise = RP.randomProjection(rMatrix, reader.readFile(file));
+//        File file = new File("C:\\Users\\Lecromine\\Documents\\facegallery\\s20\\2.pgm");
+//        
+//        double[] recognise = RP.randomProjection(rMatrix, pgmReader.readFile(file));
 //        
 //        ClosestMatch closestMatch = new ClosestMatch();
 //        
-//        System.out.println(closestMatch.shortestEuclideanDistance(RP.getProjectedFaceMat(), recognise));
-//          
-//        
-//        
+//        System.out.println(closestMatch.shortestEuclideanDistance(
+//                RP.getProjectedFaceMat(), recognise));
 
-        // writer.save("C:\\Users\\Lecromine\\face-recogniser\\FaceRecogniser\\savedfiles\\projectedFaceMat.txt", RP.getProjectedFaceMat());
+        MainFrame mainFrame = new MainFrame(rMatrix, RP);
+        mainFrame.setVisible(true);
         
+//         writer.save("C:\\Users\\Lecromine\\face-recogniser\\FaceRecogniser\\savedfiles\\projectedFaceMat.txt", RP.getProjectedFaceMat());
 //        FaceList theList = new FaceList();
 //
 //        Reader reader = new Reader();

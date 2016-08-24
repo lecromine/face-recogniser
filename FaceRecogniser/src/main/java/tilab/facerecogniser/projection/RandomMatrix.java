@@ -80,7 +80,6 @@ public class RandomMatrix {
             for (int k = 0; k < rColumns; k++) {
                 projectedVector[i] += rMatrix[i][k] * A[k];
             }
-
         }
 
         return projectedVector;
@@ -93,6 +92,10 @@ public class RandomMatrix {
     public void setFilePath(String filepath) throws IOException {
         this.filepath = filepath + "\\RandomMatrix.csv";
         initializeRMatrix();
+    }
+    
+    public String getFilePath() {
+        return this.filepath;
     }
 
     public int getWidth() {
