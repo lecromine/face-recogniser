@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class PGMReader {
 
     CSVReader writer = new CSVReader();
+    String filepath = "";
 
     public PGMReader() {
 
@@ -63,8 +64,7 @@ public class PGMReader {
         int index = 0;
 
         for (int i = 1; i <= 40; i++) {
-            String path = "C:/Users/Lecromine/Documents/facegallery/s" + i;
-            File dir = new File(path);
+            File dir = new File(filepath);
             for (File file : dir.listFiles()) {
                 faceMat = Arrays.copyOf(faceMat, faceMat.length + 1);
                 faceMat[index] = readFile(file);
@@ -126,6 +126,10 @@ public class PGMReader {
 
         }
         return faceVec;
+    }
+    
+    public void setFilePath(String filepath) {
+        this.filepath = filepath;
     }
 
 }

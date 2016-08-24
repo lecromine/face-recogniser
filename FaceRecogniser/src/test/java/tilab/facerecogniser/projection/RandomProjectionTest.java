@@ -28,6 +28,7 @@ public class RandomProjectionTest {
     String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
 
     public RandomProjectionTest() {
+        pgmReader.setFilePath(filepath);
     }
 
     @Test

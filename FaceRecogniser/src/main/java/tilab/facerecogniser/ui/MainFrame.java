@@ -211,6 +211,7 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             rMatrix.setFilePath(fileUploadPath);
             RP.setFilepath(fileUploadPath);
+            reader.setFilePath(fileUploadPath);
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

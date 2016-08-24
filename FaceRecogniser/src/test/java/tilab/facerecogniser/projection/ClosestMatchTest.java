@@ -26,6 +26,7 @@ public class ClosestMatchTest {
     String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
     
     public ClosestMatchTest() {
+        reader.setFilePath(filepath);
     }
     
     @Test
