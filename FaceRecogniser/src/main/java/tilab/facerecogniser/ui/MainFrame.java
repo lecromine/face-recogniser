@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import tilab.facerecogniser.filereading.ArrayFileWriter;
-import tilab.facerecogniser.filereading.FaceFileReader;
+import tilab.facerecogniser.filereading.CSVReader;
+import tilab.facerecogniser.filereading.PGMReader;
 import tilab.facerecogniser.projection.RandomMatrix;
 import tilab.facerecogniser.projection.RandomProjection;
-import tilab.facerecogniser.recognitionprocess.ClosestMatch;
+import tilab.facerecogniser.projection.ClosestMatch;
 
 /**
  *
@@ -22,10 +22,10 @@ import tilab.facerecogniser.recognitionprocess.ClosestMatch;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    FaceFileReader reader = new FaceFileReader();
+    PGMReader reader = new PGMReader();
     RandomProjection RP;
     RandomMatrix rMatrix;
-    ArrayFileWriter writer = new ArrayFileWriter();
+    CSVReader writer = new CSVReader();
     ClosestMatch closestMatch = new ClosestMatch();
 
     public MainFrame(RandomMatrix rMatrix, RandomProjection RP) {
@@ -310,8 +310,16 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         String filepath = jTextField3.getText();
-        rMatrix.setrMatrixFilePath(filepath);
-        RP.setProjectedFaceMatrixFilePath(filepath);
+        try {
+            rMatrix.setFilePath(filepath);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            RP.setFilepath(filepath);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_jButton6ActionPerformed
 

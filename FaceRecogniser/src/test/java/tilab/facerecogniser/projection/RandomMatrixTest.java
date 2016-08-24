@@ -21,23 +21,47 @@ import org.junit.Test;
  */
 public class RandomMatrixTest {
 
+    String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
+
     public RandomMatrixTest() {
     }
-    
+
     @Test
-    public void initializeMatrixTest() throws IOException {
+    public void intializeMatrixTest1() throws IOException {
         RandomMatrix rMatrix = new RandomMatrix();
-        
-        rMatrix.initializeRMatrix();
-        
-        double[][] testrMatrix = Arrays.copyOf(rMatrix.rMatrix, rMatrix.rMatrix.length);
-        
-        rMatrix.initializeRMatrix();
-        
-        if (!Arrays.equals(rMatrix.rMatrix, testrMatrix)) {
-            fail("The random matrix initializer changes the matrix");
+        rMatrix.setFilePath(filepath);
+        double[][] testMat = new double[500][10340];
+
+        for (int i = 0; i < testMat.length; i++) {
+            for (int j = 0; j < testMat[0].length; j++) {
+                testMat[i][j] = 0.0;
+            }
         }
-        
+
+        for (int i = 0; i < rMatrix.rMatrix.length; i++) {
+            if (Arrays.equals(rMatrix.rMatrix[i], testMat[i])) {
+                fail("something went wrong");
+            }
+        }
+    }
+
+    @Test
+    public void initializeMatrixTest2() throws IOException {
+        RandomMatrix rMatrix = new RandomMatrix();
+        rMatrix.setFilePath(filepath);
+
+        rMatrix.initializeRMatrix();
+
+        double[][] testrMatrix = Arrays.copyOf(rMatrix.rMatrix, rMatrix.rMatrix.length);
+
+        rMatrix.initializeRMatrix();
+
+        for (int i = 0; i < rMatrix.rMatrix.length; i++) {
+
+            if (!Arrays.equals(rMatrix.rMatrix[i], testrMatrix[i])) {
+                fail("The random matrix initializer changes the matrix");
+            }
+        }
     }
 
     @Test
@@ -56,7 +80,6 @@ public class RandomMatrixTest {
 //            fail("The variables of the resulting matrix does not match to what was expected");
 //
 //        }
-
     }
 
     @BeforeClass

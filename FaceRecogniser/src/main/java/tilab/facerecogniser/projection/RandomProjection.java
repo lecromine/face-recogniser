@@ -6,17 +6,17 @@ package tilab.facerecogniser.projection;
 
 import java.io.IOException;
 import java.util.Arrays;
-import tilab.facerecogniser.filereading.ArrayFileWriter;
-import tilab.facerecogniser.filereading.FaceFileReader;
+import tilab.facerecogniser.filereading.CSVReader;
+import tilab.facerecogniser.filereading.PGMReader;
 
 public class RandomProjection {
 
-    ArrayFileWriter writer = new ArrayFileWriter();
+    CSVReader csvReader = new CSVReader();
     double[][] projectedFaceMat;
     String projectedFaceMatrixFilePath = "";
 
     public RandomProjection() throws IOException {
-        loadProjectedFaceMat();
+
     }
 
 
@@ -34,9 +34,9 @@ public class RandomProjection {
         projectedFaceMat[index] = projectedFaceVec;
 
     }
-    
+
     public void saveProjectedFaceMat() throws IOException {
-        writer.save(projectedFaceMatrixFilePath, projectedFaceMat);
+        csvReader.save(projectedFaceMatrixFilePath, projectedFaceMat);
     }
 
     /*
@@ -54,20 +54,25 @@ public class RandomProjection {
 
         return projectedFaceVec;
     }
-    
+
     public double[][] getProjectedFaceMat() {
         return this.projectedFaceMat;
     }
-    
+
     public void loadProjectedFaceMat() throws IOException {
-        this.projectedFaceMat = writer.load(projectedFaceMatrixFilePath, 0, 500);
+        if (!projectedFaceMatrixFilePath.equals("")) {
+            this.projectedFaceMat = csvReader.load(projectedFaceMatrixFilePath, 0, 500);
+        } else {
+            System.out.println("Save folder not initialized. Try again.");
+        }
     }
-    
-    public void setProjectedFaceMatrixFilePath(String filepath) {
+
+    public void setFilepath(String filepath) throws IOException {
         this.projectedFaceMatrixFilePath = filepath + "\\ProjectedFaceMatrix.csv";
+        loadProjectedFaceMat();
     }
-    
-    public String getProjectedFaceMatrixFilePath() {
+
+    public String getFilepath() {
         return this.projectedFaceMatrixFilePath;
     }
 

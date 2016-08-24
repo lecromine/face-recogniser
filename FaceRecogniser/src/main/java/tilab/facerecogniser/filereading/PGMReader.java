@@ -12,11 +12,11 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class FaceFileReader {
+public class PGMReader {
 
-    ArrayFileWriter writer = new ArrayFileWriter();
+    CSVReader writer = new CSVReader();
 
-    public FaceFileReader() {
+    public PGMReader() {
 
     }
 
@@ -32,7 +32,7 @@ public class FaceFileReader {
 
         double[] projectedFaceVec = new double[0];
 
-        if (!writer.doesFileExist(RP.getProjectedFaceMatrixFilePath())) {
+        if (!writer.doesFileExist(RP.getFilepath())) {
             
             int[][] faceMat = new int[0][0];
 

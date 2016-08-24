@@ -14,9 +14,9 @@ import java.util.Scanner;
  *
  * @author Lecromine
  */
-public class ArrayFileWriter {
+public class CSVReader {
 
-    public ArrayFileWriter() {
+    public CSVReader() {
 
     }
 

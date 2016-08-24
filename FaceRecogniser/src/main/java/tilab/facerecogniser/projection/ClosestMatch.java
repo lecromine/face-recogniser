@@ -2,7 +2,7 @@
  * This class finds the closest face vector to the one we want to recognise.
  *
  */
-package tilab.facerecogniser.recognitionprocess;
+package tilab.facerecogniser.projection;
 
 public class ClosestMatch {
 
@@ -18,7 +18,8 @@ public class ClosestMatch {
      * @param faceVecRecognisable uploaded face vector
      * @return distance between the two vectors
      */
-    public int shortestEuclideanDistance(double[][] projectedFaceMat, double[] faceVecRecognisable) {
+    public int shortestEuclideanDistance(double[][] projectedFaceMat, 
+            double[] faceVecRecognisable) {
 
         double[] closestSoFar = new double[0];
         double minDistance = Double.MAX_VALUE;

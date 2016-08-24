@@ -2,7 +2,7 @@ package tilab.facerecogniser.projection;
 
 import java.io.IOException;
 import java.util.Random;
-import tilab.facerecogniser.filereading.ArrayFileWriter;
+import tilab.facerecogniser.filereading.CSVReader;
 
 /*
 This class contains information about the random matrix that is used in random 
@@ -14,11 +14,11 @@ normal distribution.
 public class RandomMatrix {
 
     double[][] rMatrix = new double[500][10340];
-    ArrayFileWriter writer = new ArrayFileWriter();
-    String rMatrixFilepath = "";
+    CSVReader writer = new CSVReader();
+    String filepath = "";
 
     public RandomMatrix() throws IOException {
-        initializeRMatrix();
+        
     }
 
     /*
@@ -38,7 +38,7 @@ public class RandomMatrix {
      */
     public void initializeRMatrix() throws IOException {
         
-        if (writer.doesFileExist(rMatrixFilepath)== false) {
+        if (writer.doesFileExist(filepath)== false) {
             Random r = new Random();
 
             for (int i = 0; i < rMatrix.length; i++) {
@@ -47,9 +47,9 @@ public class RandomMatrix {
                 }
             }
 
-            writer.save(rMatrixFilepath, rMatrix);
+            writer.save(filepath, rMatrix);
         } else {
-            this.rMatrix = writer.load(rMatrixFilepath, rMatrix.length, rMatrix[0].length);
+            this.rMatrix = writer.load(filepath, rMatrix.length, rMatrix[0].length);
         }
     }
 
@@ -90,8 +90,9 @@ public class RandomMatrix {
         return this.rMatrix;
     }
     
-    public void setrMatrixFilePath(String filepath) {
-        this.rMatrixFilepath = filepath + "\\RandomMatrix.csv";
+    public void setFilePath(String filepath) throws IOException {
+        this.filepath = filepath + "\\RandomMatrix.csv";
+        initializeRMatrix();
     }
 
     public int getWidth() {
