@@ -21,17 +21,18 @@ import tilab.facerecogniser.projection.ClosestMatch;
  * @author Lecromine
  */
 public class MainFrame extends javax.swing.JFrame {
-
-    PGMReader reader = new PGMReader();
+    PGMReader pgmReader;
     RandomProjection RP;
     RandomMatrix rMatrix;
     CSVReader writer = new CSVReader();
     ClosestMatch closestMatch = new ClosestMatch();
     String fileUploadPath;
 
-    public MainFrame(RandomMatrix rMatrix, RandomProjection RP) {
+    public MainFrame(RandomMatrix rMatrix, RandomProjection RP, PGMReader pgmReader, String path) {
         this.rMatrix = rMatrix;
         this.RP = RP;
+        this.pgmReader = pgmReader;
+        this.fileUploadPath = path;
         initComponents();
     }
 
@@ -49,12 +50,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        pathtextfield = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -62,43 +58,14 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.setText(".pgm");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        pathtextfield.setText(".pgm");
+        pathtextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Select folder containing the face images in .pgm format");
-
-        jButton1.setText("Choose...");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Upload");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("All the files per one person should be in it's own directory.");
-
-        jTextField2.setText(".pgm");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                pathtextfieldActionPerformed(evt);
             }
         });
 
@@ -127,6 +94,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel5.setText(" ");
 
+        jLabel6.setText("File has to be of size 94x112 and on .pgm format.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,43 +105,29 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pathtextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                     .addComponent(jButton4)
                     .addComponent(jSeparator2)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel5)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
-                    .addComponent(jButton2)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel6))
                 .addGap(9, 9, 9))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(13, 13, 13)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pathtextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
@@ -182,59 +137,15 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void pathtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathtextfieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File file = chooser.getCurrentDirectory();
-        String path = file.getAbsolutePath();
-        jTextField1.setText(path);
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.fileUploadPath = jTextField1.getText();
-
-        String filepath = jTextField1.getText();
-        try {
-            rMatrix.setFilePath(fileUploadPath);
-            RP.setFilepath(fileUploadPath);
-            reader.setFilePath(fileUploadPath);
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            RP.setFilepath(filepath);
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            reader.addFaces(RP, rMatrix);
-        } catch (IOException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        jButton2.setText("Done.");
-
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_pathtextfieldActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
@@ -245,12 +156,14 @@ public class MainFrame extends javax.swing.JFrame {
         chooser.showOpenDialog(null);
         File file = chooser.getSelectedFile();
         String path = file.getAbsolutePath();
-        jTextField2.setText(path);
+        pathtextfield.setText(path);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String filepath = jTextField2.getText();
+        
         double[] recognise = new double[0];
+        
+        File fileRecognise = new File(pathtextfield.getText());
 
         if (rMatrix.getFilePath().equals("")
                 || RP.getFilepath().equals("")) {
@@ -258,7 +171,7 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
 
             try {
-                recognise = RP.randomProjection(rMatrix, reader.readFile(new File(filepath)));
+                recognise = RP.randomProjection(rMatrix, pgmReader.readFile(fileRecognise));
             } catch (IOException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -273,7 +186,7 @@ public class MainFrame extends javax.swing.JFrame {
                 int temp = Integer.parseInt(fileName) + 1;
                 fileName = temp + "";
 
-                pathToTheRecognised = fileUploadPath + "\\s1\\" + fileName + ".pgm";
+                pathToTheRecognised = fileUploadPath + "/s1/" + fileName + ".pgm";
                 
             } else if (indexOfClosest < 100) {
                 String folderName = String.valueOf(Math.abs((long) indexOfClosest)).charAt(0) + "";
@@ -283,7 +196,7 @@ public class MainFrame extends javax.swing.JFrame {
                 temp = Integer.parseInt(fileName);
                 fileName = temp + "";
 
-                pathToTheRecognised = fileUploadPath + "\\s" + folderName + "\\" + fileName + ".pgm";
+                pathToTheRecognised = fileUploadPath + "/s" + folderName + "/" + fileName + ".pgm";
 
             } else {
                 String folderName = String.valueOf(Math.abs((long) indexOfClosest)).charAt(0) + "" + String.valueOf(Math.abs((long) indexOfClosest)).charAt(1);
@@ -294,7 +207,7 @@ public class MainFrame extends javax.swing.JFrame {
                 temp = Integer.parseInt(fileName);
                 fileName = temp + "";
 
-                pathToTheRecognised = fileUploadPath + "\\s" + folderName + "\\" + fileName + ".pgm";
+                pathToTheRecognised = fileUploadPath + "/s" + folderName + "/" + fileName + ".pgm";
             }
 
             jLabel5.setText("" + pathToTheRecognised);
@@ -348,19 +261,15 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField pathtextfield;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,31 +12,29 @@ import tilab.facerecogniser.projection.ClosestMatch;
 public class main {
 
     public static void main(String[] args) throws IOException {
+//
+        String filepath = "src/main/resources";
 
+        File file = new File(filepath);
+        
+        RandomProjection RP = new RandomProjection(file.getAbsolutePath());
+        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        CSVReader reader = new CSVReader();
+        PGMReader pgmReader = new PGMReader(file.getAbsolutePath());
 
-        RandomProjection RP = new RandomProjection();
-        RandomMatrix rMatrix = new RandomMatrix();
-//        CSVReader reader = new CSVReader();
-//        PGMReader pgmReader = new PGMReader();
-//        String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
-//        
-//        RP.setFilepath(filepath);
-//        rMatrix.setFilePath(filepath);
-//        
-//        pgmReader.addFaces(RP, rMatrix);
-//        
-//        File file = new File("C:\\Users\\Lecromine\\Documents\\facegallery\\s20\\2.pgm");
-//        
-//        double[] recognise = RP.randomProjection(rMatrix, pgmReader.readFile(file));
-//        
+        pgmReader.initializeDatabase(RP, rMatrix);
+//
+        File fileRecognise = new File(file.getAbsolutePath() + "/facegallery/s30/2.pgm");
+////        
+//        double[] recognise = RP.randomProjection(rMatrix, pgmReader.readFile(fileRecognise));
+////        
 //        ClosestMatch closestMatch = new ClosestMatch();
-//        
+////        
 //        System.out.println(closestMatch.shortestEuclideanDistance(
 //                RP.getProjectedFaceMat(), recognise));
 
-        MainFrame mainFrame = new MainFrame(rMatrix, RP);
+        MainFrame mainFrame = new MainFrame(rMatrix, RP, pgmReader,file.getAbsolutePath());
         mainFrame.setVisible(true);
-        
 //         writer.save("C:\\Users\\Lecromine\\face-recogniser\\FaceRecogniser\\savedfiles\\projectedFaceMat.txt", RP.getProjectedFaceMat());
 //        FaceList theList = new FaceList();
 //

@@ -20,60 +20,61 @@ import tilab.facerecogniser.filereading.PGMReader;
  * @author Lecromine
  */
 public class ClosestMatchTest {
-    
+
     ClosestMatch closestMatch = new ClosestMatch();
-    PGMReader reader = new PGMReader();
+
     String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
-    
+
     public ClosestMatchTest() {
-        reader.setFilePath(filepath);
+
     }
-    
+
     @Test
     public void shortestEuclideanDistanceTest1() throws IOException {
-        
+
         long beginningTime = System.currentTimeMillis();
-        
-        RandomProjection randomProjection = new RandomProjection();
-        RandomMatrix rMatrix = new RandomMatrix();
-        
+
+        String filepath = "src/main/resources";
+        File file = new File(filepath);
+        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
+        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        PGMReader reader = new PGMReader(file.getAbsolutePath());
+
         randomProjection.setFilepath(filepath);
         rMatrix.setFilePath(filepath);
-        
+
         int[] testFaceVec = reader.readFile(
                 new File("C:\\Users\\Lecromine\\Documents\\facegallery\\s20\\2.pgm"));
-        
+
         double[] testProjectedVec = randomProjection.randomProjection(
                 rMatrix, testFaceVec);
-        
+
         int indexOfClosest = closestMatch.shortestEuclideanDistance(
                 randomProjection.projectedFaceMat, testProjectedVec);
-        
+
         if (indexOfClosest != 192) {
             fail("index of closest " + indexOfClosest + " != 10");
-        } 
-        
-                long endingTime = System.currentTimeMillis();
-        
-        System.out.println("Duration of the operation: " + 
-                (endingTime - beginningTime) + "ms.");
-        
-        
-        
+        }
+
+        long endingTime = System.currentTimeMillis();
+
+        System.out.println("Duration of the operation: "
+                + (endingTime - beginningTime) + "ms.");
+
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }

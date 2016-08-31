@@ -5,6 +5,7 @@
  */
 package tilab.facerecogniser.projection;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
@@ -24,16 +25,17 @@ import tilab.facerecogniser.filereading.PGMReader;
 public class RandomProjectionTest {
 
     CSVReader csvReader = new CSVReader();
-    PGMReader pgmReader = new PGMReader();
-    String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
 
     public RandomProjectionTest() {
-        pgmReader.setFilePath(filepath);
     }
 
     @Test
     public void bindTogetherTest() throws IOException {
-        RandomProjection randomProjection = new RandomProjection();
+        String filepath = "src/main/resources";
+        File file = new File(filepath);
+        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
+        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        PGMReader reader = new PGMReader(file.getAbsolutePath());
         
         randomProjection.setFilepath(filepath);
 
@@ -58,16 +60,16 @@ public class RandomProjectionTest {
     @Test
     public void loadProjectedFaceMatTest() throws IOException {
 
-        RandomProjection randomProjection = new RandomProjection();
-        RandomMatrix rMatrix = new RandomMatrix();
+        String filepath = "src/main/resources";
+        File file = new File(filepath);
+        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
+        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        PGMReader pgmReader = new PGMReader(file.getAbsolutePath());
 
-        randomProjection.setFilepath(filepath);
-        rMatrix.setFilePath(filepath);
-
-        pgmReader.addFaces(randomProjection, rMatrix);
+        pgmReader.initializeDatabase(randomProjection, rMatrix);
 
         double[][] testMat = csvReader.load(
-                "C:\\Users\\Lecromine\\Documents\\savedfiles\\ProjectedFaceMatrix.csv",
+                file.getAbsolutePath() + "/ProjectedFaceMatrix.csv",
                 0, 500);
 
         double[][] projectedFaceMat = randomProjection.projectedFaceMat;
@@ -83,21 +85,12 @@ public class RandomProjectionTest {
     }
 
     @Test
-    public void setProjectedFaceMatFilePathTest() throws IOException {
-        RandomProjection randomProjection = new RandomProjection();
-        randomProjection.setFilepath(filepath);
-
-        if (randomProjection.getFilepath().equals(
-                "C:\\Users\\Lecromine\\ProjectedFaceMatrix.csv"));
-
-    }
-
-    @Test
     public void randomProjectionTest() throws IOException {
-        RandomProjection randomProjection = new RandomProjection();
-        RandomMatrix rMatrix = new RandomMatrix();
-        randomProjection.setFilepath(filepath);
-        rMatrix.setFilePath(filepath);
+        String filepath = "src/main/resources";
+        File file = new File(filepath);
+        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
+        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        PGMReader reader = new PGMReader(file.getAbsolutePath());
         
         Random random = new Random();
         int[] testVec = new int[10340];

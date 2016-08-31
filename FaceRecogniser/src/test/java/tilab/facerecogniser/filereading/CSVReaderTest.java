@@ -1,5 +1,6 @@
 package tilab.facerecogniser.filereading;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
@@ -9,14 +10,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tilab.facerecogniser.projection.RandomMatrix;
+import tilab.facerecogniser.projection.RandomProjection;
 
 /**
  *
  * @author Lecromine
  */
 public class CSVReaderTest {
-
-    String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
     CSVReader csvReader = new CSVReader();
 
     public CSVReaderTest() {
@@ -24,6 +25,10 @@ public class CSVReaderTest {
 
     @Test
     public void saveTest() throws IOException {
+        
+        String filepath = "src/main/resources";
+        File file = new File(filepath);
+        filepath = file.getAbsolutePath();
         
         long beginningTime = System.currentTimeMillis();
         

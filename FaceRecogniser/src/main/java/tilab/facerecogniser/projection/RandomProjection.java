@@ -12,11 +12,12 @@ import tilab.facerecogniser.filereading.PGMReader;
 public class RandomProjection {
 
     CSVReader csvReader = new CSVReader();
-    double[][] projectedFaceMat;
-    String filepath = "";
+    double[][] projectedFaceMat = new double[0][0];
+    String filepath;
 
-    public RandomProjection() throws IOException {
-
+    public RandomProjection(String filepath) {
+        this.filepath = filepath + "\\ProjectedFaceMatrix.csv";
+        
     }
 
 
@@ -68,7 +69,7 @@ public class RandomProjection {
     }
 
     public void setFilepath(String filepath) throws IOException {
-        this.filepath = filepath + "\\ProjectedFaceMatrix.csv";
+
         loadProjectedFaceMat();
     }
 

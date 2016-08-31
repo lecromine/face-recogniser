@@ -15,10 +15,10 @@ import java.util.Scanner;
 public class PGMReader {
 
     CSVReader writer = new CSVReader();
-    String filepath = "";
+    String filepath;
 
-    public PGMReader() {
-
+    public PGMReader(String filepath) {
+        this.filepath = filepath;
     }
 
     /**
@@ -29,7 +29,7 @@ public class PGMReader {
      * @param RP        This is used to project the new face to the R^k subspace.
      * @param rMatrix   Random matrix defines the projected face vector.
      */
-    public void addFaces(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
+    public void initializeDatabase(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
 
         double[] projectedFaceVec = new double[0];
 
@@ -52,7 +52,7 @@ public class PGMReader {
     }
 
     /**
-     * With this method we can initilaize the face matrix for testing purposes.
+     * With this method we can initialize the face matrix for testing purposes.
      * This is done by uploading AT&T face gallery for further examination.
      * http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
      * 
@@ -64,7 +64,7 @@ public class PGMReader {
         int index = 0;
 
         for (int i = 1; i <= 40; i++) {
-            File dir = new File(filepath);
+            File dir = new File(filepath + "\\facegallery\\s" + i + "\\");
             for (File file : dir.listFiles()) {
                 faceMat = Arrays.copyOf(faceMat, faceMat.length + 1);
                 faceMat[index] = readFile(file);

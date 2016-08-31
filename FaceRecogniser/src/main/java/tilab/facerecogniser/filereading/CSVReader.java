@@ -15,6 +15,7 @@ import java.util.Scanner;
  * @author Lecromine
  */
 public class CSVReader {
+    
 
     public CSVReader() {
 
@@ -91,7 +92,7 @@ public class CSVReader {
                     rows++;
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println("exception" + e);
             }
         }
 

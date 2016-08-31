@@ -5,6 +5,7 @@
  */
 package tilab.facerecogniser.projection;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import org.junit.After;
@@ -13,6 +14,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import tilab.facerecogniser.filereading.PGMReader;
 
 /**
  *
@@ -27,8 +29,14 @@ public class RandomMatrixTest {
 
     @Test
     public void intializeMatrixTest1() throws IOException {
-        RandomMatrix rMatrix = new RandomMatrix();
-        rMatrix.setFilePath(filepath);
+
+        String filepath = "src/main/resources";
+        File file = new File(filepath);
+        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
+        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        PGMReader reader = new PGMReader(file.getAbsolutePath());
+
+
         double[][] testMat = new double[500][10340];
 
         for (int i = 0; i < testMat.length; i++) {
@@ -46,8 +54,11 @@ public class RandomMatrixTest {
 
     @Test
     public void initializeMatrixTest2() throws IOException {
-        RandomMatrix rMatrix = new RandomMatrix();
-        rMatrix.setFilePath(filepath);
+        String filepath = "src/main/resources";
+        File file = new File(filepath);
+        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
+        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        PGMReader reader = new PGMReader(file.getAbsolutePath());
 
         rMatrix.initializeRMatrix();
 

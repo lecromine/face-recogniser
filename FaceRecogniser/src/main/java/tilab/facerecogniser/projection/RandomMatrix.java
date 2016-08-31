@@ -11,14 +11,15 @@ normal distribution.
 @param int[][] RMatrix  the random matrix that is used to project faces to the 
                         lower dimension
  */
-public class RandomMatrix {
+public final class RandomMatrix {
 
     double[][] rMatrix = new double[500][10340];
     CSVReader writer = new CSVReader();
-    String filepath = "";
+    String filepath;
 
-    public RandomMatrix() throws IOException {
-        
+    public RandomMatrix(String filepath) throws IOException {
+        this.filepath = filepath + "/RandomMatrix.csv";
+        initializeRMatrix();
     }
 
     /*
@@ -27,7 +28,7 @@ public class RandomMatrix {
     new random matrix per every recognition.
      */
     public void getSavedRMatrix() {
-
+        
     }
 
     /*
