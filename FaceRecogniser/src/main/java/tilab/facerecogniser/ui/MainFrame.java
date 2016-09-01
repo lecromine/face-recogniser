@@ -5,6 +5,7 @@
  */
 package tilab.facerecogniser.ui;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -21,12 +22,14 @@ import tilab.facerecogniser.projection.ClosestMatch;
  * @author Lecromine
  */
 public class MainFrame extends javax.swing.JFrame {
+
     PGMReader pgmReader;
     RandomProjection RP;
     RandomMatrix rMatrix;
     CSVReader writer = new CSVReader();
     ClosestMatch closestMatch = new ClosestMatch();
     String fileUploadPath;
+    String pathToTheRecognised;
 
     public MainFrame(RandomMatrix rMatrix, RandomProjection RP, PGMReader pgmReader, String path) {
         this.rMatrix = rMatrix;
@@ -53,12 +56,13 @@ public class MainFrame extends javax.swing.JFrame {
         pathtextfield = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jButton4 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,11 +94,20 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("index of closest");
+        jLabel4.setText("Path to the recognised face");
 
         jLabel5.setText(" ");
 
-        jLabel6.setText("File has to be of size 94x112 and on .pgm format.");
+        jLabel6.setText("File has to be of size 92x112 and on .pgm format.");
+
+        jTextField1.setText(" ");
+
+        jButton1.setText("Open");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,20 +121,19 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(pathtextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                     .addComponent(jButton4)
-                    .addComponent(jSeparator2)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(9, 9, 9))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -135,9 +147,13 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addGap(32, 32, 32))
         );
 
         pack();
@@ -160,9 +176,9 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+
         double[] recognise = new double[0];
-        
+
         File fileRecognise = new File(pathtextfield.getText());
 
         if (rMatrix.getFilePath().equals("")
@@ -179,43 +195,32 @@ public class MainFrame extends javax.swing.JFrame {
             int indexOfClosest = closestMatch.shortestEuclideanDistance(RP.getProjectedFaceMat(),
                     recognise);
 
-            String pathToTheRecognised = "";
-
-            if (indexOfClosest < 10) {
-                String fileName = String.valueOf(Math.abs((long) indexOfClosest)).charAt(0) + "";
-                int temp = Integer.parseInt(fileName) + 1;
-                fileName = temp + "";
-
-                pathToTheRecognised = fileUploadPath + "/s1/" + fileName + ".pgm";
-                
-            } else if (indexOfClosest < 100) {
-                String folderName = String.valueOf(Math.abs((long) indexOfClosest)).charAt(0) + "";
-                int temp = Integer.parseInt(folderName) + 1;
-                folderName = temp + "";
-                String fileName = String.valueOf(Math.abs((long) indexOfClosest)).charAt(1) + "";
-                temp = Integer.parseInt(fileName);
-                fileName = temp + "";
-
-                pathToTheRecognised = fileUploadPath + "/s" + folderName + "/" + fileName + ".pgm";
-
-            } else {
-                String folderName = String.valueOf(Math.abs((long) indexOfClosest)).charAt(0) + "" + String.valueOf(Math.abs((long) indexOfClosest)).charAt(1);
-                System.out.println(folderName);
-                int temp = Integer.parseInt(folderName) + 1;
-                folderName = temp + "";
-                String fileName = String.valueOf(Math.abs((long) indexOfClosest)).charAt(2) + "";
-                temp = Integer.parseInt(fileName);
-                fileName = temp + "";
-
-                pathToTheRecognised = fileUploadPath + "/s" + folderName + "/" + fileName + ".pgm";
-            }
-
-            jLabel5.setText("" + pathToTheRecognised);
+            pathToTheRecognised = pgmReader.getPathsToFiles()[indexOfClosest];
+                        
+            jTextField1.setText("" + pathToTheRecognised);
 
         }
 
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        File file = new File(pathToTheRecognised);
+
+            if (!Desktop.isDesktopSupported()) {
+                System.out.println("Desktop is not supported");
+                return;
+            }
+
+            Desktop desktop = Desktop.getDesktop();
+            if (file.exists()) {
+                try {
+                    desktop.open(file);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +266,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JFileChooser jFileChooser1;
@@ -268,8 +274,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField pathtextfield;
     // End of variables declaration//GEN-END:variables
 }

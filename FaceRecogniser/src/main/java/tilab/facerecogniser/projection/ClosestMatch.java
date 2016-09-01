@@ -26,10 +26,6 @@ public class ClosestMatch {
         double distance = 0;
         int minRow = 0;
         int indexOfClosest = 0;
-        
-        double correctOne = 0; // debugging
-        int index = 0; // debugging
-        int jndex = 0; // debugging
 
         try {
             for (int i = 0; i < projectedFaceMat.length; i++) {
@@ -37,9 +33,6 @@ public class ClosestMatch {
 
                 innerloop:
                 for (int j = 0; j < projectedFaceMat[i].length; j++) {
-                    index = i;
-                    jndex = j;
-
                     double p = faceVecRecognisable[j];
                     double q = projectedFaceMat[i][j];
                     distance = distance + Math.pow(p - q, 2);
@@ -49,9 +42,6 @@ public class ClosestMatch {
 
                 }
                 
-                if (i == 192) {
-                    correctOne = distance;
-                }
 
                 if (distance < minDistance) {
                     closestSoFar = projectedFaceMat[i];
@@ -63,12 +53,7 @@ public class ClosestMatch {
             }
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("i " + index + " j " + jndex);
         }
-
-        System.out.println("index of closest " + indexOfClosest);
-        System.out.println("distance " + distance);
-        System.out.println("distancetotherightone " + correctOne);
 
         return indexOfClosest;
     }

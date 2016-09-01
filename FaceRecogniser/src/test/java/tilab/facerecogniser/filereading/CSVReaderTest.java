@@ -41,7 +41,7 @@ public class CSVReaderTest {
             }
         }
 
-        csvReader.save(filepath + "testMatrix.csv", testMatrix);
+        csvReader.save(filepath + "/testMatrix.csv", testMatrix);
 
         double[][] loadedTestMatrix = csvReader.load(
                 filepath + "testMatrix.csv", 50, 50);

@@ -15,7 +15,6 @@ import java.util.Scanner;
  * @author Lecromine
  */
 public class CSVReader {
-    
 
     public CSVReader() {
 
@@ -47,6 +46,36 @@ public class CSVReader {
                 }
                 sb.append('\n');
             }
+            pw.write(sb.toString());
+            pw.close();
+        }
+
+    }
+
+    /**
+     * This method does the same as the previous one but for 1D string arrays.
+     *
+     * @param filepath path to the save location
+     * @param pathsToFaces string array containing the paths to faces in
+     * ProjectedFaceMatrix
+     * @throws IOException
+     */
+    public void save(String filepath, String[] pathsToFaces) throws IOException {
+
+        if (filepath.equals("")) {
+            System.out.println("Saving folder for temporary files not initialized");
+        } else {
+
+            File f = new File(filepath);
+
+            PrintWriter pw = new PrintWriter(new File(filepath));
+            StringBuilder sb = new StringBuilder();
+
+            for (String x : pathsToFaces) {
+                sb.append(x);
+                sb.append(',');
+            }
+
             pw.write(sb.toString());
             pw.close();
         }
@@ -91,6 +120,40 @@ public class CSVReader {
 
                     rows++;
                 }
+            } catch (Exception e) {
+                System.out.println("exception" + e);
+            }
+        }
+
+        return savedArray;
+    }
+
+    /**
+     * This method does the same as the previous one but for String arrays.
+     *
+     * @param filename path to the location
+     * @param length length of the array
+     * @return string array with paths to the faces
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public String[] load(String filename, int length) throws FileNotFoundException, IOException {
+        String[] savedArray = new String[length];
+
+        if (filename.equals("")) {
+            System.out.println("Saving folder for temporary files not initialized");
+        } else {
+
+            Scanner scanIn = null;
+            String inputLine = "";
+
+            try {
+
+                scanIn = new Scanner(new BufferedReader(new FileReader(filename)));
+
+                inputLine = scanIn.nextLine();
+                savedArray = inputLine.split(",");
+
             } catch (Exception e) {
                 System.out.println("exception" + e);
             }

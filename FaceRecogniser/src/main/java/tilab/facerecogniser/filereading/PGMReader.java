@@ -14,7 +14,8 @@ import java.util.Scanner;
 
 public class PGMReader {
 
-    CSVReader writer = new CSVReader();
+    CSVReader csvReader = new CSVReader();
+    String[] pathsToFaces = new String[400];
     String filepath;
 
     public PGMReader(String filepath) {
@@ -33,7 +34,7 @@ public class PGMReader {
 
         double[] projectedFaceVec = new double[0];
 
-        if (!writer.doesFileExist(RP.getFilepath())) {
+        if (!csvReader.doesFileExist(RP.getFilepath())) {
             
             int[][] faceMat = new int[0][0];
 
@@ -47,6 +48,7 @@ public class PGMReader {
 
         } else {
             RP.loadProjectedFaceMat();
+            this.pathsToFaces = csvReader.load(filepath + "\\PathsToFaces.csv", pathsToFaces.length);
         }
 
     }
@@ -68,9 +70,12 @@ public class PGMReader {
             for (File file : dir.listFiles()) {
                 faceMat = Arrays.copyOf(faceMat, faceMat.length + 1);
                 faceMat[index] = readFile(file);
+                pathsToFaces[index] = file.getAbsolutePath();
                 index++;
             }
         }
+        
+        csvReader.save(filepath + "\\PathsToFaces.csv", pathsToFaces);
 
         return faceMat;
     }
@@ -128,8 +133,8 @@ public class PGMReader {
         return faceVec;
     }
     
-    public void setFilePath(String filepath) {
-        this.filepath = filepath;
+    public String[] getPathsToFiles() {
+        return this.pathsToFaces;
     }
 
 }
