@@ -23,19 +23,20 @@ public class PGMReader {
     }
 
     /**
-     * This method adds new faces to the database. All the uploaded faces are 
+     * This method adds new faces to the database. All the uploaded faces are
      * listed in the parameter projectedFaceMat in the RandomProjection class.
      * These faces are projected to R^k dimension and that's why it needs the
      * RandomProjection class as a parameter.
-     * @param RP        This is used to project the new face to the R^k subspace.
-     * @param rMatrix   Random matrix defines the projected face vector.
+     *
+     * @param RP This is used to project the new face to the R^k subspace.
+     * @param rMatrix Random matrix defines the projected face vector.
      */
     public void initializeDatabase(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
 
         double[] projectedFaceVec = new double[0];
 
         if (!csvReader.doesFileExist(RP.getFilepath())) {
-            
+
             int[][] faceMat = new int[0][0];
 
             for (int[] faceVec : readATTFiles(faceMat)) {
@@ -43,7 +44,7 @@ public class PGMReader {
 
                 RP.bindTogether(projectedFaceVec);
             }
-            
+
             RP.saveProjectedFaceMat();
 
         } else {
@@ -57,8 +58,8 @@ public class PGMReader {
      * With this method we can initialize the face matrix for testing purposes.
      * This is done by uploading AT&T face gallery for further examination.
      * http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
-     * 
-     * @param faceMat   empty matrix where AT&T images are added to.
+     *
+     * @param faceMat empty matrix where AT&T images are added to.
      * @return the face matrix with all the AT&T files in it
      */
     public int[][] readATTFiles(int[][] faceMat) throws IOException {
@@ -74,7 +75,7 @@ public class PGMReader {
                 index++;
             }
         }
-        
+
         csvReader.save(filepath + "\\PathsToFaces.csv", pathsToFaces);
 
         return faceMat;
@@ -82,7 +83,8 @@ public class PGMReader {
 
     /**
      * This method reads the file .pgm from the location given to it.
-     * @param file  the file that needs to be read
+     *
+     * @param file the file that needs to be read
      * @return
      */
     public int[] readFile(File file) throws FileNotFoundException, IOException {
@@ -94,12 +96,18 @@ public class PGMReader {
             f = new FileInputStream(file);
             BufferedReader br = new BufferedReader(new InputStreamReader(f));
             // format -variable has either value P5 or P2: in my implementation we only consider the P5 case.
-            String format = br.readLine();  
+            String format = br.readLine();
             String line = br.readLine();
 
             Scanner s = new Scanner(line);
             int width = s.nextInt();
-            int height = s.nextInt();
+            if (!s.hasNext()) {
+                line = br.readLine();
+                s = new Scanner(line);
+                int height = s.nextInt();
+            } else {
+                int height = s.nextInt();
+            }
             s.close();
 
             line = br.readLine();
@@ -132,7 +140,7 @@ public class PGMReader {
         }
         return faceVec;
     }
-    
+
     public String[] getPathsToFiles() {
         return this.pathsToFaces;
     }

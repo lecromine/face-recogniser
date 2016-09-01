@@ -6,6 +6,8 @@ package tilab.facerecogniser.projection;
 
 public class ClosestMatch {
 
+    public double distance = 0;
+
     public ClosestMatch() {
 
     }
@@ -18,14 +20,17 @@ public class ClosestMatch {
      * @param faceVecRecognisable uploaded face vector
      * @return distance between the two vectors
      */
-    public int shortestEuclideanDistance(double[][] projectedFaceMat, 
+    public int shortestEuclideanDistance(double[][] projectedFaceMat,
             double[] faceVecRecognisable) {
 
         double[] closestSoFar = new double[0];
         double minDistance = Double.MAX_VALUE;
-        double distance = 0;
         int minRow = 0;
         int indexOfClosest = 0;
+
+        double correctOne = 0; // debugging
+        int index = 0; // debugging
+        int jndex = 0; // debugging
 
         try {
             for (int i = 0; i < projectedFaceMat.length; i++) {
@@ -33,6 +38,9 @@ public class ClosestMatch {
 
                 innerloop:
                 for (int j = 0; j < projectedFaceMat[i].length; j++) {
+                    index = i;
+                    jndex = j;
+
                     double p = faceVecRecognisable[j];
                     double q = projectedFaceMat[i][j];
                     distance = distance + Math.pow(p - q, 2);
@@ -41,7 +49,6 @@ public class ClosestMatch {
                     }
 
                 }
-                
 
                 if (distance < minDistance) {
                     closestSoFar = projectedFaceMat[i];
@@ -53,7 +60,12 @@ public class ClosestMatch {
             }
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("i " + index + " j " + jndex);
         }
+
+        distance = Math.sqrt(distance);
+        
+        System.out.println(distance);
 
         return indexOfClosest;
     }

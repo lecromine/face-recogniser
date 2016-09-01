@@ -63,6 +63,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        warning1 = new javax.swing.JLabel();
+        warning2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +111,10 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        warning1.setText(" ");
+
+        warning2.setText(" ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,13 +133,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(warning1)
+                    .addComponent(warning2))
                 .addGap(9, 9, 9))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -151,9 +159,13 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(7, 7, 7)
+                .addComponent(warning1)
+                .addGap(4, 4, 4)
+                .addComponent(warning2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addGap(32, 32, 32))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -196,8 +208,13 @@ public class MainFrame extends javax.swing.JFrame {
                     recognise);
 
             pathToTheRecognised = pgmReader.getPathsToFiles()[indexOfClosest];
-                        
+
             jTextField1.setText("" + pathToTheRecognised);
+
+            if (closestMatch.distance > 70000) {
+                warning1.setText("Consider that the recognition was not successful in this case.");
+                warning2.setText("The person is probably not included in the AT&T database.");
+            }
 
         }
 
@@ -207,19 +224,19 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         File file = new File(pathToTheRecognised);
 
-            if (!Desktop.isDesktopSupported()) {
-                System.out.println("Desktop is not supported");
-                return;
-            }
+        if (!Desktop.isDesktopSupported()) {
+            System.out.println("Desktop is not supported");
+            return;
+        }
 
-            Desktop desktop = Desktop.getDesktop();
-            if (file.exists()) {
-                try {
-                    desktop.open(file);
-                } catch (IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        Desktop desktop = Desktop.getDesktop();
+        if (file.exists()) {
+            try {
+                desktop.open(file);
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -277,5 +294,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField pathtextfield;
+    private javax.swing.JLabel warning1;
+    private javax.swing.JLabel warning2;
     // End of variables declaration//GEN-END:variables
 }
