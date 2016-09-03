@@ -198,11 +198,7 @@ public class MainFrame extends javax.swing.JFrame {
             jLabel5.setText("Saving folder for temporary files not initialized. Try again.");
         } else {
 
-            try {
-                recognise = RP.randomProjection(rMatrix, pgmReader.readFile(fileRecognise));
-            } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            recognise = RP.randomProjection(rMatrix, pgmReader.readFile(fileRecognise));
 
             int indexOfClosest = closestMatch.shortestEuclideanDistance(RP.getProjectedFaceMat(),
                     recognise);

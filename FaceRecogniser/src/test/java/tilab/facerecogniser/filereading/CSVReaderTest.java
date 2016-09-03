@@ -11,10 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Lecromine
- */
 public class CSVReaderTest {
     CSVReader csvReader = new CSVReader();
 
@@ -33,9 +29,9 @@ public class CSVReaderTest {
         double[][] testMatrix = new double[50][50];
         Random random = new Random();
 
-        for (int i = 0; i < testMatrix.length; i++) {
+        for (double[] testVector : testMatrix) {
             for (int j = 0; j < testMatrix[0].length; j++) {
-                testMatrix[i][j] = random.nextDouble();
+                testVector[j] = random.nextDouble();
             }
         }
 

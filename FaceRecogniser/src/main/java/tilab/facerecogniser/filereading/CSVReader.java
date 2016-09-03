@@ -26,7 +26,7 @@ public class CSVReader {
      *
      * @param filepath path to the saving folder
      * @param matrix matrix that needs to be saved
-     * @throws IOException
+     * @throws IOException fail if printwriter fails
      */
     public void save(String filepath, double[][] matrix) throws IOException {
 
@@ -36,18 +36,18 @@ public class CSVReader {
 
             File f = new File(filepath);
 
-            PrintWriter pw = new PrintWriter(new File(filepath));
-            StringBuilder sb = new StringBuilder();
-
-            for (double[] vector : matrix) {
-                for (double x : vector) {
-                    sb.append(Double.toString(x));
-                    sb.append(',');
+            try (PrintWriter pw = new PrintWriter(new File(filepath))) {
+                StringBuilder sb = new StringBuilder();
+                
+                for (double[] vector : matrix) {
+                    for (double x : vector) {
+                        sb.append(Double.toString(x));
+                        sb.append(',');
+                    }
+                    sb.append('\n');
                 }
-                sb.append('\n');
+                pw.write(sb.toString());
             }
-            pw.write(sb.toString());
-            pw.close();
         }
 
     }
@@ -58,7 +58,7 @@ public class CSVReader {
      * @param filepath path to the save location
      * @param pathsToFaces string array containing the paths to faces in
      * ProjectedFaceMatrix
-     * @throws IOException
+     * @throws IOException fail if PrintWriter fails
      */
     public void save(String filepath, String[] pathsToFaces) throws IOException {
 
@@ -68,43 +68,42 @@ public class CSVReader {
 
             File f = new File(filepath);
 
-            PrintWriter pw = new PrintWriter(new File(filepath));
-            StringBuilder sb = new StringBuilder();
-
-            for (String x : pathsToFaces) {
-                sb.append(x);
-                sb.append(',');
+            try (PrintWriter pw = new PrintWriter(new File(filepath))) {
+                StringBuilder sb = new StringBuilder();
+                
+                for (String x : pathsToFaces) {
+                    sb.append(x);
+                    sb.append(',');
+                }
+                
+                pw.write(sb.toString());
             }
-
-            pw.write(sb.toString());
-            pw.close();
         }
 
     }
 
-    /*
-    this method reads the .txt file and converts it back to double array.
-    @param String filename  the path to .txt
-    @param double[][] projectedFaceMat  empty double array in which the .txt file is written
-    @return projectedFaceMat    successfully converted double array.
+    /**
+     * this method reads the .csv file and converts it to a double array.
+     * @param filename  the path to .txt
+     * @param matrixRows    amount of rows in the .csv file
+     * @param matrixCols    amount of columns in the .csv file
+     * @return .csv file as a 2D double array
      */
-    public double[][] load(String filename, int matrixRows, int matrixCols) throws FileNotFoundException, IOException {
+    public double[][] load(String filename, int matrixRows, int matrixCols) {
         double[][] savedArray = new double[matrixRows][matrixCols];
 
         if (filename.equals("")) {
             System.out.println("Saving folder for temporary files not initialized");
         } else {
-
-            Scanner scanIn = null;
+            
             int rows = 0;
-            String inputLine = "";
 
             try {
 
-                scanIn = new Scanner(new BufferedReader(new FileReader(filename)));
+                Scanner scanIn = new Scanner(new BufferedReader(new FileReader(filename)));
 
                 while (scanIn.hasNextLine()) {
-                    inputLine = scanIn.nextLine();
+                    String inputLine = scanIn.nextLine();
                     String[] InArray = inputLine.split(",");
 
                     if (savedArray.length == rows) {
@@ -120,7 +119,7 @@ public class CSVReader {
 
                     rows++;
                 }
-            } catch (Exception e) {
+            } catch (FileNotFoundException | NumberFormatException e) {
                 System.out.println("exception" + e);
             }
         }
@@ -134,24 +133,19 @@ public class CSVReader {
      * @param filename path to the location
      * @param length length of the array
      * @return string array with paths to the faces
-     * @throws FileNotFoundException
-     * @throws IOException
      */
-    public String[] load(String filename, int length) throws FileNotFoundException, IOException {
+    public String[] load(String filename, int length) {
         String[] savedArray = new String[length];
 
         if (filename.equals("")) {
             System.out.println("Saving folder for temporary files not initialized");
         } else {
 
-            Scanner scanIn = null;
-            String inputLine = "";
-
             try {
 
-                scanIn = new Scanner(new BufferedReader(new FileReader(filename)));
+                Scanner scanIn = new Scanner(new BufferedReader(new FileReader(filename)));
 
-                inputLine = scanIn.nextLine();
+                String inputLine = scanIn.nextLine();
                 savedArray = inputLine.split(",");
 
             } catch (Exception e) {
@@ -161,15 +155,15 @@ public class CSVReader {
 
         return savedArray;
     }
-
-    /*
-    this method checks if the file is empty and returns true if so, otherwise false
-    @param String filename  path to the file
-    @return true/false
+    
+    /**
+     * this method checks if the file is empty and returns true if so, otherwise false
+     * @param filepath path to the file
+     * @return true if file exists, otherwise false 
      */
-    public boolean doesFileExist(String filename) throws FileNotFoundException, IOException {
+    public boolean doesFileExist(String filepath) {
 
-        File f = new File(filename);
+        File f = new File(filepath);
 
         return f.exists();
 

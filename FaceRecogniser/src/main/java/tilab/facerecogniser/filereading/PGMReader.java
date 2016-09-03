@@ -30,17 +30,16 @@ public class PGMReader {
      *
      * @param RP This is used to project the new face to the R^k subspace.
      * @param rMatrix Random matrix defines the projected face vector.
+     * @throws java.io.IOException if PrintWriter fails
      */
     public void initializeDatabase(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
-
-        double[] projectedFaceVec = new double[0];
 
         if (!csvReader.doesFileExist(RP.getFilepath())) {
 
             int[][] faceMat = new int[0][0];
 
             for (int[] faceVec : readATTFiles(faceMat)) {
-                projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
+                double[] projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
 
                 RP.bindTogether(projectedFaceVec);
             }
@@ -55,12 +54,11 @@ public class PGMReader {
     }
 
     /**
-     * With this method we can initialize the face matrix for testing purposes.
-     * This is done by uploading AT&T face gallery for further examination.
-     * http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html
-     *
-     * @param faceMat empty matrix where AT&T images are added to.
-     * @return the face matrix with all the AT&T files in it
+     * This method initialises the face library for testing purposes.
+     * We use the ATT face database.
+     * @param faceMat empty matrix where ATT images are added to.
+     * @return the face matrix with all the ATT files in it.
+     * @throws java.io.IOException if PrintWriter fails
      */
     public int[][] readATTFiles(int[][] faceMat) throws IOException {
 
@@ -85,62 +83,58 @@ public class PGMReader {
      * This method reads the file .pgm from the location given to it.
      *
      * @param file the file that needs to be read
-     * @return
+     * @return pgm file as an int array
      */
-    public int[] readFile(File file) throws FileNotFoundException, IOException {
+    public int[] readFile(File file) {
 
         int[] faceVec = new int[10340];
 
         FileInputStream f;
         try {
             f = new FileInputStream(file);
-            BufferedReader br = new BufferedReader(new InputStreamReader(f));
-            // format -variable has either value P5 or P2: in my implementation we only consider the P5 case.
-            String format = br.readLine();
-            String line = br.readLine();
-
-            Scanner s = new Scanner(line);
-            int width = s.nextInt();
-            if (!s.hasNext()) {
+            
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(f))) {
+                // format -variable has either value P5 or P2: in my implementation we only consider the P5 case.
+                String format = br.readLine();
+                String line = br.readLine();
+                
+                Scanner s = new Scanner(line);
+                int width = s.nextInt();
+                if (!s.hasNext()) {
+                    line = br.readLine();
+                    s = new Scanner(line);
+                    int height = s.nextInt();
+                } else {
+                    int height = s.nextInt();
+                }
+                s.close();
+                
                 line = br.readLine();
                 s = new Scanner(line);
-                int height = s.nextInt();
-            } else {
-                int height = s.nextInt();
+                
+                s.close();
             }
-            s.close();
-
-            line = br.readLine();
-            s = new Scanner(line);
-
-            s.close();
-            br.close();
             f.close();
 
             int pixelValue = 0;
             int counter = 0;
             f = new FileInputStream(file);
-            DataInputStream dis = new DataInputStream(f);
-
-            dis.readLine();
-            dis.readLine();
-            dis.readLine();
-            while ((pixelValue = dis.read()) >= 0) {
-                faceVec[counter] = pixelValue;
-                counter++;
+            try (DataInputStream dis = new DataInputStream(f)) {
+                dis.readLine();
+                dis.readLine();
+                dis.readLine();
+                while ((pixelValue = dis.read()) >= 0) {
+                    faceVec[counter] = pixelValue;
+                    counter++;
+                }
             }
 
-            dis.close();
-
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-
         }
         return faceVec;
     }
-
+ 
     public String[] getPathsToFiles() {
         return this.pathsToFaces;
     }

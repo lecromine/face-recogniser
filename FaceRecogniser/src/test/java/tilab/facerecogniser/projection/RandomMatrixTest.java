@@ -37,9 +37,9 @@ public class RandomMatrixTest {
 
         double[][] testMat = new double[500][10340];
 
-        for (int i = 0; i < testMat.length; i++) {
+        for (double[] testVector : testMat) {
             for (int j = 0; j < testMat[0].length; j++) {
-                testMat[i][j] = 0.0;
+                testVector[j] = 0.0;
             }
         }
 
@@ -70,24 +70,6 @@ public class RandomMatrixTest {
                 fail("The random matrix initializer changes the matrix");
             }
         }
-    }
-
-    @Test
-    public void multiplicatorTest() {
-
-//        int[][] A = {{4, 3}, {2, 1}};
-//        int[][] B = {{1, 2}, {1, -2}};
-//
-//        RandomMatrix rand = new RandomMatrix();
-//
-//        double[][] C = rand.multiplicator(A, B);
-//
-//        double[][] checker = {{7.0, 2.0}, {3.0, 2.0}};
-//               
-//        if (C.equals(checker)) {
-//            fail("The variables of the resulting matrix does not match to what was expected");
-//
-//        }
     }
 
     @BeforeClass

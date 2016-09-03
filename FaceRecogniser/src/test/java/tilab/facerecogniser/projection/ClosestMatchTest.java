@@ -37,7 +37,7 @@ public class ClosestMatchTest {
         RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
         PGMReader reader = new PGMReader(file.getAbsolutePath());
 
-        randomProjection.setFilepath(filepath);
+        randomProjection.setFilePath(filepath);
         rMatrix.setFilePath(filepath);
 
         int[] testFaceVec = reader.readFile(

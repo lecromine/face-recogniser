@@ -37,7 +37,7 @@ public class RandomProjectionTest {
         RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
         PGMReader reader = new PGMReader(file.getAbsolutePath());
         
-        randomProjection.setFilepath(filepath);
+        randomProjection.setFilePath(filepath);
 
         double[] testVec = new double[10340];
         
