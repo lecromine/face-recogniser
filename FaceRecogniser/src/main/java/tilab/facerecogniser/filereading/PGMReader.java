@@ -49,7 +49,7 @@ public class PGMReader {
 
         } else {
             RP.loadProjectedFaceMat();
-            this.pathsToFaces = csvReader.load(filepath + "\\PathsToFaces.csv", pathsToFaces.length);
+            this.pathsToFaces = csvReader.load(filepath + "/PathsToFaces.csv", pathsToFaces.length);
         }
 
     }
@@ -67,7 +67,7 @@ public class PGMReader {
         int index = 0;
 
         for (int i = 1; i <= 40; i++) {
-            File dir = new File(filepath + "\\facegallery\\s" + i + "\\");
+            File dir = new File(filepath + "/facegallery/s" + i + "/");
             for (File file : dir.listFiles()) {
                 faceMat = Arrays.copyOf(faceMat, faceMat.length + 1);
                 faceMat[index] = readFile(file);
@@ -76,7 +76,7 @@ public class PGMReader {
             }
         }
 
-        csvReader.save(filepath + "\\PathsToFaces.csv", pathsToFaces);
+        csvReader.save(filepath + "/PathsToFaces.csv", pathsToFaces);
 
         return faceMat;
     }

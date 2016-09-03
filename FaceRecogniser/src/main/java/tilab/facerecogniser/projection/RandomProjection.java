@@ -7,7 +7,6 @@ package tilab.facerecogniser.projection;
 import java.io.IOException;
 import java.util.Arrays;
 import tilab.facerecogniser.filereading.CSVReader;
-import tilab.facerecogniser.filereading.PGMReader;
 
 public class RandomProjection {
 
@@ -16,7 +15,7 @@ public class RandomProjection {
     String filepath;
 
     public RandomProjection(String filepath) {
-        this.filepath = filepath + "\\ProjectedFaceMatrix.csv";
+        this.filepath = filepath + "/ProjectedFaceMatrix.csv";
         
     }
 

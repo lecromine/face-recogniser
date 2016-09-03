@@ -91,7 +91,7 @@ public final class RandomMatrix {
     }
     
     public void setFilePath(String filepath) throws IOException {
-        this.filepath = filepath + "\\RandomMatrix.csv";
+        this.filepath = filepath + "/RandomMatrix.csv";
         initializeRMatrix();
     }
     

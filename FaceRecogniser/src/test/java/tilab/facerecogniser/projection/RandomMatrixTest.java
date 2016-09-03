@@ -22,8 +22,6 @@ import tilab.facerecogniser.filereading.PGMReader;
  */
 public class RandomMatrixTest {
 
-    String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
-
     public RandomMatrixTest() {
     }
 

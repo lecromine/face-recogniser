@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import tilab.facerecogniser.projection.RandomMatrix;
-import tilab.facerecogniser.projection.RandomProjection;
 
 /**
  *
@@ -26,7 +24,7 @@ public class CSVReaderTest {
     @Test
     public void saveTest() throws IOException {
         
-        String filepath = "src/main/resources";
+        String filepath = "src/main/resources/";
         File file = new File(filepath);
         filepath = file.getAbsolutePath();
         
@@ -44,7 +42,7 @@ public class CSVReaderTest {
         csvReader.save(filepath + "/testMatrix.csv", testMatrix);
 
         double[][] loadedTestMatrix = csvReader.load(
-                filepath + "testMatrix.csv", 50, 50);
+                filepath + "/testMatrix.csv", 50, 50);
 
         for (int i = 0; i < testMatrix.length; i++) {
             if (!Arrays.equals(loadedTestMatrix[i], testMatrix[i])) {

@@ -22,9 +22,6 @@ import tilab.facerecogniser.filereading.PGMReader;
 public class ClosestMatchTest {
 
     ClosestMatch closestMatch = new ClosestMatch();
-
-    String filepath = "C:\\Users\\Lecromine\\Documents\\savedfiles\\";
-
     public ClosestMatchTest() {
 
     }
@@ -44,7 +41,7 @@ public class ClosestMatchTest {
         rMatrix.setFilePath(filepath);
 
         int[] testFaceVec = reader.readFile(
-                new File("C:\\Users\\Lecromine\\Documents\\facegallery\\s20\\2.pgm"));
+                new File(file.getAbsolutePath() + "/facegallery/s20/2.pgm"));
 
         double[] testProjectedVec = randomProjection.randomProjection(
                 rMatrix, testFaceVec);
@@ -53,7 +50,7 @@ public class ClosestMatchTest {
                 randomProjection.projectedFaceMat, testProjectedVec);
 
         if (indexOfClosest != 192) {
-            fail("index of closest " + indexOfClosest + " != 10");
+            fail("index of closest " + indexOfClosest + " != 192");
         }
 
         long endingTime = System.currentTimeMillis();
