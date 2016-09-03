@@ -4,7 +4,7 @@ A program that can recognize a person based on pictures of their faces.
 * [Program definiton](Documentation/definition.md)
 * [Activity log](Documentation/activitylog.md)
 * [User guide](Documentation/user-guide.md)
-* [Javadoc](FaceRecogniser/target/site/apidocs/index.html)
+* [Javadoc](https://htmlpreview.github.io/?https://github.com/lecromine/face-recogniser/blob/master/Documentation/apidocs/index.html)
 
 ### Week reports
 - [First week](Documentation/First-week-report.md)
