@@ -50,8 +50,12 @@ public class ClosestMatchTest {
         int indexOfClosest = closestMatch.shortestEuclideanDistance(
                 randomProjection.projectedFaceMat, testProjectedVec);
 
-        if (indexOfClosest != 192) {
-            fail("index of closest " + indexOfClosest + " != 192" + randomProjection.getFile().getAbsolutePath() + " " + rMatrix.getFile().getAbsolutePath());
+        String path1 = pgmReader.getPathsToFiles()[indexOfClosest] + "";
+        String path2 = file.getAbsolutePath() + "\\facegallery\\s20\\2.pgm";
+
+        if (!path1.equals(path2)) {
+            fail(path1 + " != " + path2);
+            
         }
 
         long endingTime = System.currentTimeMillis();

@@ -59,7 +59,7 @@ public class ClosestMatch {
         distance = Math.sqrt(distance);
         
         System.out.println(distance);
-        System.out.println();
+        System.out.println(indexOfClosest);
 
         return indexOfClosest;
     }

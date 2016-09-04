@@ -32,6 +32,8 @@ public class main {
                 + rMatrix.getFile().getAbsolutePath());
         
         /* Open UI. */
+        
+        
 
         MainFrame mainFrame = new MainFrame(rMatrix, randomProjection, 
                 pgmReader, file.getAbsolutePath() + "/facegallery/");
