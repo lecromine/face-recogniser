@@ -11,20 +11,30 @@ import tilab.facerecogniser.filereading.PGMReader;
 public class main {
 
     public static void main(String[] args) throws IOException {
+        
+        /* Create/load matrices that are used in the recognition process. */
 
         String filepath = "src/main/resources";
 
         File file = new File(filepath);
         
-        RandomProjection RP = new RandomProjection(file.getAbsolutePath());
-        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
+        RandomProjection randomProjection = new RandomProjection(
+                new File(file.getAbsolutePath() + "/ProjectedFaceMatrix.csv"));
+        
+        RandomMatrix rMatrix = new RandomMatrix(
+                new File(file.getAbsolutePath() + "/RandomMatrix.csv"));
+        
         CSVReader reader = new CSVReader();
-        PGMReader pgmReader = new PGMReader(file.getAbsolutePath());
+        
+        PGMReader pgmReader = new PGMReader(randomProjection, rMatrix, new File(file.getAbsolutePath()));
+        
+        System.out.println(randomProjection.getFile().getAbsolutePath()+ " " 
+                + rMatrix.getFile().getAbsolutePath());
+        
+        /* Open UI. */
 
-        pgmReader.initializeDatabase(RP, rMatrix);
-        System.out.println(RP.getFilepath() + " " + rMatrix.getFilePath());
-
-        MainFrame mainFrame = new MainFrame(rMatrix, RP, pgmReader,file.getAbsolutePath() + "/facegallery/");
+        MainFrame mainFrame = new MainFrame(rMatrix, randomProjection, 
+                pgmReader, file.getAbsolutePath() + "/facegallery/");
         mainFrame.setVisible(true);
 
     }

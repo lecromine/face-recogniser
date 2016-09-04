@@ -1,5 +1,6 @@
 package tilab.facerecogniser.projection;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import tilab.facerecogniser.filereading.CSVReader;
@@ -14,10 +15,10 @@ public final class RandomMatrix {
 
     double[][] rMatrix = new double[500][10340];
     CSVReader writer = new CSVReader();
-    String filepath;
+    File rMatrixFile;
 
-    public RandomMatrix(String filepath) throws IOException {
-        this.filepath = filepath + "/RandomMatrix.csv";
+    public RandomMatrix(File file) throws IOException {
+        this.rMatrixFile = file;
         initializeRMatrix();
     }
 
@@ -31,18 +32,18 @@ public final class RandomMatrix {
     
     public void initializeRMatrix() throws IOException {
         
-        if (writer.doesFileExist(filepath)== false) {
+        if (!rMatrixFile.exists()) {
             Random r = new Random();
 
-            for (int i = 0; i < rMatrix.length; i++) {
-                for (int j = 0; j < rMatrix[i].length; j++) {
-                    rMatrix[i][j] = r.nextGaussian();
+            for (double[] rVector : rMatrix) {
+                for (int j = 0; j < rVector.length; j++) {
+                    rVector[j] = r.nextGaussian();
                 }
             }
 
-            writer.save(filepath, rMatrix);
+            writer.save(rMatrixFile, rMatrix);
         } else {
-            this.rMatrix = writer.load(filepath, rMatrix.length, rMatrix[0].length);
+            this.rMatrix = writer.load(rMatrixFile, rMatrix.length, rMatrix[0].length);
         }
     }
     
@@ -88,20 +89,11 @@ public final class RandomMatrix {
     }
     
     /**
-     * @return the filepath to the RandomMatrix.csv file.
+     * @return the file path to the RandomMatrix.csv file.
      */
     
-    public String getFilePath() {
-        return this.filepath;
-    }
-    
-    /**
-     * Changes the matrix file path
-     * @param filepath the path to the RandomMatrix.csv file
-     */
-    
-    public void setFilePath(String filepath) {
-        this.filepath = filepath;
+    public File getFile() {
+        return this.rMatrixFile;
     }
     
     /**

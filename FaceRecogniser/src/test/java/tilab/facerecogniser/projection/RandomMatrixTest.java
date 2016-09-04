@@ -29,10 +29,12 @@ public class RandomMatrixTest {
     public void intializeMatrixTest1() throws IOException {
 
         String filepath = "src/main/resources";
+
         File file = new File(filepath);
-        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
-        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
-        PGMReader reader = new PGMReader(file.getAbsolutePath());
+        
+        RandomProjection RP = new RandomProjection(new File(filepath + "/ProjectedFaceMatrix.csv"));
+        RandomMatrix rMatrix = new RandomMatrix(new File(filepath + "/RandomMatrix.csv"));
+        PGMReader pgmReader = new PGMReader(RP, rMatrix, new File(filepath));
 
 
         double[][] testMat = new double[500][10340];
@@ -53,12 +55,13 @@ public class RandomMatrixTest {
     @Test
     public void initializeMatrixTest2() throws IOException {
         String filepath = "src/main/resources";
-        File file = new File(filepath);
-        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
-        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
-        PGMReader reader = new PGMReader(file.getAbsolutePath());
 
-        rMatrix.initializeRMatrix();
+        File file = new File(filepath);
+        
+        RandomProjection randomProjection = new RandomProjection(new File(filepath + "/ProjectedFaceMatrix.csv"));
+        RandomMatrix rMatrix = new RandomMatrix(new File(filepath + "/RandomMatrix.csv"));
+        PGMReader pgmReader = new PGMReader(randomProjection, rMatrix, new File(filepath));
+
 
         double[][] testrMatrix = Arrays.copyOf(rMatrix.rMatrix, rMatrix.rMatrix.length);
 

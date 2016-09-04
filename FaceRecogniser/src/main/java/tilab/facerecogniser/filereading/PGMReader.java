@@ -16,39 +16,40 @@ public class PGMReader {
 
     CSVReader csvReader = new CSVReader();
     String[] pathsToFaces = new String[400];
-    String filepath;
+    File filepath;
 
-    public PGMReader(String filepath) {
-        this.filepath = filepath;
+    public PGMReader(RandomProjection randomProjection, RandomMatrix rMatrix, File file) throws IOException {
+        this.filepath = file;
+        initializeDatabase(randomProjection, rMatrix);
     }
 
     /**
      * This method adds new faces to the database. All the uploaded faces are
-     * listed in the parameter projectedFaceMat in the RandomProjection class.
+     * listed in the 2D double array projectedFaceMat in the RandomProjection class.
      * These faces are projected to R^k dimension and that's why it needs the
      * RandomProjection class as a parameter.
      *
-     * @param RP This is used to project the new face to the R^k subspace.
+     * @param randomProjection This is used to project the new face to the R^k subspace.
      * @param rMatrix Random matrix defines the projected face vector.
      * @throws java.io.IOException if PrintWriter fails
      */
-    public void initializeDatabase(RandomProjection RP, RandomMatrix rMatrix) throws IOException {
+    public void initializeDatabase(RandomProjection randomProjection, RandomMatrix rMatrix) throws IOException {
 
-        if (!csvReader.doesFileExist(RP.getFilepath())) {
+        if (!randomProjection.getFile().exists()) {
 
             int[][] faceMat = new int[0][0];
 
             for (int[] faceVec : readATTFiles(faceMat)) {
-                double[] projectedFaceVec = RP.randomProjection(rMatrix, faceVec);
+                double[] projectedFaceVec = randomProjection.randomProjection(rMatrix, faceVec);
 
-                RP.bindTogether(projectedFaceVec);
+                randomProjection.bindTogether(projectedFaceVec);
             }
 
-            RP.saveProjectedFaceMat();
+            randomProjection.saveProjectedFaceMat();
 
         } else {
-            RP.loadProjectedFaceMat();
-            this.pathsToFaces = csvReader.load(filepath + "/PathsToFaces.csv", pathsToFaces.length);
+            randomProjection.loadProjectedFaceMat();
+            this.pathsToFaces = csvReader.load(new File(filepath.getAbsolutePath() + "/PathsToFaces.csv"), pathsToFaces.length);
         }
 
     }
@@ -65,7 +66,7 @@ public class PGMReader {
         int index = 0;
 
         for (int i = 1; i <= 40; i++) {
-            File dir = new File(filepath + "/facegallery/s" + i + "/");
+            File dir = new File(filepath.getAbsolutePath() + "/facegallery/s" + i + "/");
             for (File file : dir.listFiles()) {
                 faceMat = Arrays.copyOf(faceMat, faceMat.length + 1);
                 faceMat[index] = readFile(file);
@@ -74,7 +75,8 @@ public class PGMReader {
             }
         }
 
-        csvReader.save(filepath + "/PathsToFaces.csv", pathsToFaces);
+        csvReader.save(new File(filepath.getAbsolutePath() + "/PathsToFaces.csv"), 
+                pathsToFaces);
 
         return faceMat;
     }
@@ -94,10 +96,14 @@ public class PGMReader {
             f = new FileInputStream(file);
             
             try (BufferedReader br = new BufferedReader(new InputStreamReader(f))) {
-                // format -variable has either value P5 or P2: in my implementation we only consider the P5 case.
+                /* Format -variable has either value P5 or P2: in my 
+                implementation we only consider the P5 case. */
                 String format = br.readLine();
+                /* We read the line that contains width and height to the line-variable */
                 String line = br.readLine();
-                
+                /* Scanner divides the line-variable to width and height. In some cases
+                height is not on the same row as width in the .pgm files so we need to
+                take that into account: hence the if-function. */
                 Scanner s = new Scanner(line);
                 int width = s.nextInt();
                 if (!s.hasNext()) {
@@ -108,6 +114,8 @@ public class PGMReader {
                     int height = s.nextInt();
                 }
                 s.close();
+                
+                /* We consume the remaining lines. */
                 
                 line = br.readLine();
                 s = new Scanner(line);
@@ -123,6 +131,10 @@ public class PGMReader {
                 dis.readLine();
                 dis.readLine();
                 dis.readLine();
+                
+                /* The following while-loop reads the color values 0-256 to
+                pixelValue-variable and then copies them to the faceVec. */
+                
                 while ((pixelValue = dis.read()) >= 0) {
                     faceVec[counter] = pixelValue;
                     counter++;
@@ -130,10 +142,18 @@ public class PGMReader {
             }
 
         } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
         } catch (IOException e) {
+            System.out.println("Compile error");
         }
         return faceVec;
     }
+    
+    /**
+     * This method returns all the paths to the .pgm files in the
+     * facegallery directory.
+     * @return file paths as a string array
+     */
  
     public String[] getPathsToFiles() {
         return this.pathsToFaces;

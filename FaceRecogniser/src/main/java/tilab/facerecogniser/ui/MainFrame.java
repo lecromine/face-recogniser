@@ -193,8 +193,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         File fileRecognise = new File(pathtextfield.getText());
 
-        if (rMatrix.getFilePath().equals("")
-                || RP.getFilepath().equals("")) {
+        if (!rMatrix.getFile().exists() || !RP.getFile().exists()) {
             jLabel5.setText("Saving folder for temporary files not initialized. Try again.");
         } else {
 

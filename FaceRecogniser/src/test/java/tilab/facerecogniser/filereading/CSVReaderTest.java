@@ -35,10 +35,10 @@ public class CSVReaderTest {
             }
         }
 
-        csvReader.save(filepath + "/testMatrix.csv", testMatrix);
+        csvReader.save(new File(filepath + "/testMatrix.csv"), testMatrix);
 
         double[][] loadedTestMatrix = csvReader.load(
-                filepath + "/testMatrix.csv", 50, 50);
+                new File(filepath + "/testMatrix.csv"), 50, 50);
 
         for (int i = 0; i < testMatrix.length; i++) {
             if (!Arrays.equals(loadedTestMatrix[i], testMatrix[i])) {

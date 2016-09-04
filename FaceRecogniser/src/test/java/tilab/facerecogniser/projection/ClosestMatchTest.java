@@ -32,15 +32,16 @@ public class ClosestMatchTest {
         long beginningTime = System.currentTimeMillis();
 
         String filepath = "src/main/resources";
+
         File file = new File(filepath);
-        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
-        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
-        PGMReader reader = new PGMReader(file.getAbsolutePath());
+        
+        RandomProjection randomProjection = new RandomProjection(new File(file.getAbsolutePath() + "/ProjectedFaceMatrix.csv"));
+        RandomMatrix rMatrix = new RandomMatrix(new File(file.getAbsolutePath() + "/RandomMatrix.csv"));
+        PGMReader pgmReader = new PGMReader(randomProjection, rMatrix, new File(file.getAbsolutePath()));
+        
+        
 
-        randomProjection.setFilePath(filepath);
-        rMatrix.setFilePath(filepath);
-
-        int[] testFaceVec = reader.readFile(
+        int[] testFaceVec = pgmReader.readFile(
                 new File(file.getAbsolutePath() + "/facegallery/s20/2.pgm"));
 
         double[] testProjectedVec = randomProjection.randomProjection(
@@ -50,7 +51,7 @@ public class ClosestMatchTest {
                 randomProjection.projectedFaceMat, testProjectedVec);
 
         if (indexOfClosest != 192) {
-            fail("index of closest " + indexOfClosest + " != 192");
+            fail("index of closest " + indexOfClosest + " != 192" + randomProjection.getFile().getAbsolutePath() + " " + rMatrix.getFile().getAbsolutePath());
         }
 
         long endingTime = System.currentTimeMillis();

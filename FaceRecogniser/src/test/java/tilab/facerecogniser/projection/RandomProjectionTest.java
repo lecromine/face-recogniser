@@ -32,12 +32,12 @@ public class RandomProjectionTest {
     @Test
     public void bindTogetherTest() throws IOException {
         String filepath = "src/main/resources";
+
         File file = new File(filepath);
-        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
-        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
-        PGMReader reader = new PGMReader(file.getAbsolutePath());
         
-        randomProjection.setFilePath(filepath);
+        RandomProjection randomProjection = new RandomProjection(new File(filepath + "/ProjectedFaceMatrix.csv"));
+        RandomMatrix rMatrix = new RandomMatrix(new File(filepath + "/RandomMatrix.csv"));
+        PGMReader pgmReader = new PGMReader(randomProjection, rMatrix, new File(filepath));
 
         double[] testVec = new double[10340];
         
@@ -61,15 +61,15 @@ public class RandomProjectionTest {
     public void loadProjectedFaceMatTest() throws IOException {
 
         String filepath = "src/main/resources";
-        File file = new File(filepath);
-        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
-        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
-        PGMReader pgmReader = new PGMReader(file.getAbsolutePath());
 
-        pgmReader.initializeDatabase(randomProjection, rMatrix);
+        File file = new File(filepath);
+        
+        RandomProjection randomProjection = new RandomProjection(new File(filepath + "/ProjectedFaceMatrix.csv"));
+        RandomMatrix rMatrix = new RandomMatrix(new File(filepath + "/RandomMatrix.csv"));
+        PGMReader pgmReader = new PGMReader(randomProjection, rMatrix, new File(filepath));
 
         double[][] testMat = csvReader.load(
-                file.getAbsolutePath() + "/ProjectedFaceMatrix.csv",
+                new File(file.getAbsolutePath() + "/ProjectedFaceMatrix.csv"),
                 0, 500);
 
         double[][] projectedFaceMat = randomProjection.projectedFaceMat;
@@ -87,10 +87,12 @@ public class RandomProjectionTest {
     @Test
     public void randomProjectionTest() throws IOException {
         String filepath = "src/main/resources";
+
         File file = new File(filepath);
-        RandomProjection randomProjection = new RandomProjection(file.getAbsolutePath());
-        RandomMatrix rMatrix = new RandomMatrix(file.getAbsolutePath());
-        PGMReader reader = new PGMReader(file.getAbsolutePath());
+        
+        RandomProjection randomProjection = new RandomProjection(new File(filepath + "/ProjectedFaceMatrix.csv"));
+        RandomMatrix rMatrix = new RandomMatrix(new File(filepath + "/RandomMatrix.csv"));
+        PGMReader pgmReader = new PGMReader(randomProjection, rMatrix, new File(filepath));
         
         Random random = new Random();
         int[] testVec = new int[10340];
